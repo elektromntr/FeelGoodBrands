@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
+using System.Text;
+
+namespace Data.Models
+{
+	public class Brand : BaseModel
+	{
+		public string Name { get; set; }
+		public string Description { get; set; }
+		[NotMapped]
+		public ICollection<Attachment> Images { get; set; }
+		[NotMapped]
+		public ICollection<Media> Medias { get; set; }
+		public Guid CoverId { get; set; }
+		[NotMapped]
+		public Attachment Cover { get; set; }
+	}
+}
