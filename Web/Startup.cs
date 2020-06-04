@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Data.Configuration;
+using Data.Repository;
+using Logic.Services.Interfaces;
+using Logic.Services;
 
 namespace Web
 {
@@ -26,6 +29,8 @@ namespace Web
 					Configuration.GetConnectionString("DefaultConnection")));
 			services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 				.AddEntityFrameworkStores<ApplicationDbContext>();
+			services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+			services.AddTransient<IBrandService, BrandService>();
 			services.AddControllersWithViews().AddRazorRuntimeCompilation();
 			services.AddRazorPages();
 		}
