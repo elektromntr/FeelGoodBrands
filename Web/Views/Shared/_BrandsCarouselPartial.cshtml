@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Data.Models.Brand>
+@foreach (var brand in Model)
+{
+
+    @*<div class="carousel-item-a intro-item bg-image" style="background-image: url('data:@brand.Cover.FileMimeType;base64,@Convert.ToBase64String(brand.Cover.FileData)');">*@
+        <div class="carousel-item-a intro-item bg-image" >
+
+            <div class="overlay overlay-a"></div>
+            <div class="intro-content display-table">
+                <div class="table-cell">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="intro-body">
+                                    <p class="intro-title-top">
+                                        @if (brand.EditDate > DateTime.Now.AddMonths(-1))
+                                        {
+                                            <span>New!</span>
+                                        }
+                                    </p>
+                                    <h1 class="intro-title mb-4">
+                                        @brand.Name
+                                    </h1>
+                                    <p class="intro-subtitle intro-price">
+                                        <a href="#"><span class="price-a">See details</span></a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        }

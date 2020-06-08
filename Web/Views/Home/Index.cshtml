@@ -4,6 +4,9 @@
 <!--/ Carousel Star /-->
 <div class="intro intro-carousel">
     <div id="carousel" class="owl-carousel owl-theme">
+        @{
+            @await Component.InvokeAsync("BrandsCarousel")
+        }
         <div class="carousel-item-a intro-item bg-image" style="background-image: url('img/slide01.jpeg');">
             <div class="overlay overlay-a"></div>
             <div class="intro-content display-table">
