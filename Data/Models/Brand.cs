@@ -15,7 +15,7 @@ namespace Data.Models
 		[NotMapped]
 		public ICollection<Media> Medias { get; set; }
 		public Guid CoverId { get; set; }
-		[NotMapped]
+		[ForeignKey("CoverId")]
 		public Attachment Cover { get; set; }
 	}
 }

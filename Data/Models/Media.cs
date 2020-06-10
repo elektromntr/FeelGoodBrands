@@ -13,7 +13,7 @@ namespace Data.Models
 		/// Media icon
 		/// </summary>
 		public Guid ImageId { get; set; }
-		[NotMapped]
+		[ForeignKey("ImageId")]
 		public Attachment Image { get; set; }
 	}
 }

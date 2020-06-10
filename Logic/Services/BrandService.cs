@@ -3,6 +3,7 @@ using Data.Repository;
 using Logic.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,5 +24,7 @@ namespace Logic.Services
             await _brandRepository.SaveChangesAsync();
             return await createdBrand;
         }
+
+        public async Task<Brand> GetById(Guid guid) => await _brandRepository.GetById(guid);
     }
 }

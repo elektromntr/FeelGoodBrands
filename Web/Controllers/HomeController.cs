@@ -36,13 +36,13 @@ namespace Web.Controllers
 			var webClient = new WebClient();
 			
 			cover.FileData = webClient.DownloadData(someUrl);
-			cover.Id = new Guid();
+			cover.Id = Guid.NewGuid();
 			cover.CreationDate = DateTime.Now;
 			cover.FileMimeType = "image/jpeg";
-			var brandGuid = new Guid();
+			var brandGuid = Guid.NewGuid();
 			cover.ReferenceId = brandGuid;
 
-			_attachmentRepository.Add(cover);
+            Attachment attachment = await _attachmentRepository.Add(cover);
 			_attachmentRepository.SaveChanges();
 
 			var newBrand = new Brand
@@ -55,6 +55,8 @@ namespace Web.Controllers
 			};
 
 			var nuBrand = await _brandService.Create(newBrand);
+
+			var createdBrand = _brandService.GetById(brandGuid);
 
 			return View(nuBrand);
 		}
