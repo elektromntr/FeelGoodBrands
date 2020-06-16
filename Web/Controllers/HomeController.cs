@@ -30,35 +30,36 @@ namespace Web.Controllers
 
 		public async Task<IActionResult> Index()
 		{
-			var cover = new Attachment();
+			//var cover = new Attachment();
 
-			string someUrl = "https://99designs-blog.imgix.net/blog/wp-content/uploads/2018/01/attachment_91140022-e1515601908872.jpeg";
-			var webClient = new WebClient();
-			
-			cover.FileData = webClient.DownloadData(someUrl);
-			cover.Id = Guid.NewGuid();
-			cover.CreationDate = DateTime.Now;
-			cover.FileMimeType = "image/jpeg";
-			var brandGuid = Guid.NewGuid();
-			cover.ReferenceId = brandGuid;
+			//string someUrl = "https://99designs-blog.imgix.net/blog/wp-content/uploads/2018/01/attachment_91140022-e1515601908872.jpeg";
+			//var webClient = new WebClient();
 
-            Attachment attachment = await _attachmentRepository.Add(cover);
-			_attachmentRepository.SaveChanges();
+			//cover.FileData = webClient.DownloadData(someUrl);
+			//cover.Id = Guid.NewGuid();
+			//cover.CreationDate = DateTime.Now;
+			//cover.FileMimeType = "image/jpeg";
+			//var brandGuid = Guid.NewGuid();
+			//cover.ReferenceId = brandGuid;
 
-			var newBrand = new Brand
-			{
-				CreationDate = DateTime.Now,
-				Description = "Opis testowy",
-				Name = $"Brand {new Random().Next(0, 999)}",
-				CoverId = cover.Id,
-				Id = brandGuid
-			};
+			//         Attachment attachment = await _attachmentRepository.Add(cover);
+			//_attachmentRepository.SaveChanges();
 
-			var nuBrand = await _brandService.Create(newBrand);
+			//var newBrand = new Brand
+			//{
+			//	CreationDate = DateTime.Now,
+			//	Description = "Opis testowy",
+			//	Name = $"Brand {new Random().Next(0, 999)}",
+			//	CoverId = cover.Id,
+			//	Id = brandGuid
+			//};
 
-			var createdBrand = _brandService.GetById(brandGuid);
+			//var nuBrand = await _brandService.Create(newBrand);
 
-			return View(nuBrand);
+			//var createdBrand = _brandService.GetById(brandGuid);
+
+			//return View(nuBrand);
+			return View();
 		}
 
 		public IActionResult Privacy()
