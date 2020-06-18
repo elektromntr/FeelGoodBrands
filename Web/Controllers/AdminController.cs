@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Data.Models;
-using Data.Repository;
 using Logic.DataTransferObjects;
 using Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Web.Controllers
 {
@@ -25,17 +23,32 @@ namespace Web.Controllers
 
         public IActionResult CreateBrand() => View();
 
-        public async Task<IActionResult> AddBrand(CreateBrandRequest model)
+        [HttpPost]
+        public async Task<IActionResult> CreateBrand(CreateBrandRequest model)
         {
-
-            var newBrand = await _brandService.Create(model);
-            return RedirectToAction("EditBrand", new { id = newBrand.Id });
+            try
+            {
+                if (!ModelState.IsValid) return View(model);
+                var newBrand = await _brandService.Create(model);
+                return RedirectToAction("EditBrand", new { id = newBrand.Id });
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message, e.InnerException);
+            }
         }
 
         public async Task<IActionResult> EditBrand(Guid id)
         {
-            var brand = await _brandService.GetById(id);
-            return View(brand);
+            try
+            {
+                var brand = await _brandService.GetById(id);
+                return View(brand);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
     }
 }

@@ -2,8 +2,6 @@
 using Data.Repository;
 using Logic.DataTransferObjects;
 using Logic.Services.Interfaces;
-using Microsoft.Extensions.Logging;
-using Microsoft.Web.Helpers;
 using System;
 using System.IO;
 using System.Linq;
@@ -53,13 +51,13 @@ namespace Logic.Services
                                 Description = $"Cover image for {newBrand.Name} brand",
                             };
 
-                            _attachmentRepository.Add(file);
+                            await _attachmentRepository.Add(file);
 
                             await _attachmentRepository.SaveChangesAsync();
                         }
                         else
                         {
-                            throw new Exception("File too large");
+                            throw new Exception("File too large or wrong file type (only jpg allowed)");
                         }
                     }
                 }

@@ -1577,7 +1577,7 @@ footer .credits {
 
 .form-a .validation {
   color: red;
-  display: none;
+  /*display: none;*/
   margin: 4px 0 20px 0;
   font-weight: 400;
   font-size: 13px;
