@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Data.Models;
 using Data.Repository;
+using Logic.DataTransferObjects;
 using Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,8 +25,9 @@ namespace Web.Controllers
 
         public IActionResult CreateBrand() => View();
 
-        public async Task<IActionResult> AddBrand(Brand model)
+        public async Task<IActionResult> AddBrand(CreateBrandRequest model)
         {
+
             var newBrand = await _brandService.Create(model);
             return RedirectToAction("EditBrand", new { id = newBrand.Id });
         }

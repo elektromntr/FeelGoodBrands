@@ -19,7 +19,7 @@ namespace Web.Views.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var model = _brandRepository.Get().OrderByDescending(b=>b.CreationDate).Take(3).ToList();
+            var model = _brandRepository.Get().Where(b => b.CoverId != null && b.CoverId != System.Guid.Empty).OrderByDescending(b=>b.CreationDate).Take(3).ToList();
             foreach (var brand in model)
             {
                 brand.Cover = await _attachmentRepository.GetById(brand.CoverId);

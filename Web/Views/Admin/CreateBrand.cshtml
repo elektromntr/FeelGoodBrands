@@ -1,4 +1,4 @@
-﻿@model Data.Models.Brand
+﻿@model Logic.DataTransferObjects.CreateBrandRequest
 
 @{
     ViewData["Title"] = "Create Brand";
@@ -37,12 +37,10 @@
 <section class="create-brand-form">
     <div class="container">
         <div class="row">
-            <div class="col-sm-12 section-t8">
+            <div class="col-sm-12 section-tb85">
                 <div class="row">
                     <div class="col-md-7">
-                        <form class="form-a contactForm" asp-action="AddBrand" asp-controller="Admin" method="post" role="form">
-                            <div id="sendmessage">Zrobione! Brawo!</div>
-                            <div id="errormessage">Fuck! Coś poszło nie tak!</div>
+                        <form class="form-a contactForm" asp-action="AddBrand" asp-controller="Admin" method="post" role="form" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
@@ -65,6 +63,18 @@
                                                   data-rule="required"
                                                   data-msg="Please write something for us"
                                                   placeholder="Opis"></textarea>
+                                        <div class="validation"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="form-group">
+                                        <input asp-for="Cover"
+                                                  class="form-control"
+                                                  cols="45" rows="8"
+                                                  data-rule="required"
+                                                  data-msg="Please write something for us"
+                                                  placeholder="Dodaj plik" 
+                                               type="file"></input>
                                         <div class="validation"></div>
                                     </div>
                                 </div>

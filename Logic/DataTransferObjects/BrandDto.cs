@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace Logic.DataTransferObjects
 {
-    public class BrandDto
+    public class CreateBrandRequest
     {
-
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public IFormFile Cover { get; set; }
     }
 }
