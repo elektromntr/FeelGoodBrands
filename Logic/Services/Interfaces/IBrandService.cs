@@ -12,5 +12,6 @@ namespace Logic.Services.Interfaces
     {
         Task<Brand> Create(CreateBrandRequest newBrand);
         Task<Brand> GetById(Guid guid);
+        Task<Brand> Update(EditBrandRequest model);
     }
 }

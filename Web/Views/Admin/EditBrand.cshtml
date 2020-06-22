@@ -1,0 +1,159 @@
+﻿@model Data.Models.Brand
+
+@{
+    ViewData["Title"] = "Edit Brand";
+}
+
+<!--/ Intro Single star /-->
+<section class="intro-single">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-8">
+                <div class="title-single-box">
+                    <h1 class="title-single">Edycja brandu</h1>
+                    <span class="color-text-a">Edit brand</span>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-4">
+                <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a asp-action="Index" asp-controller="Admin">Admin</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a asp-action="Index" asp-controller="Home">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Edit Brand
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ Intro Single End /-->
+<input id="brandId"
+       asp-for="@Model.Id"
+       type="hidden" />
+<!--/ About Star /-->
+<section class="section-cover">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="about-img-box">
+                    <img src="data:@Model.Cover.FileMimeType;base64,@System.Convert.ToBase64String(Model.Cover.FileData)" alt="@Model.Name cover image" class="img-fluid">
+                </div>
+                <div class="sinse-box">
+                    <h3 class="sinse-title">
+                        @Model.Name
+                        <span></span>
+                        <br>
+                    </h3>
+                    <p>Z nami od @Model.CreationDate.Year</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ About End /-->
+<!--/ Create brand start /-->
+<section class="create-brand-form">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 section-tb85">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="form-a contactForm" asp-action="EditBrand" asp-controller="Admin" method="post" role="form" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <div class="form-group">
+                                        <label>Nazwa marki</label>
+                                        <input type="text"
+                                               asp-for="Name"
+                                               class="form-control form-control-lg form-control-a"
+                                               placeholder="Nazwa brandu">
+                                        <div class="validation">
+                                            <span asp-validation-for="Name"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <div class="form-group">
+                                        <label>Opis marki</label>
+                                        <textarea asp-for="Description"
+                                                  class="form-control"
+                                                  cols="45" rows="8"
+                                                  data-rule="required"
+                                                  data-msg="Please write something for us"
+                                                  placeholder="Opis"></textarea>
+                                        <div class="validation">
+                                            <span asp-validation-for="Description"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="form-group">
+                                        <label>Zdjęcie główne</label>
+                                        <input asp-for="Cover"
+                                               class="form-control"
+                                               cols="45" rows="8"
+                                               data-rule="required"
+                                               data-msg="Please write something for us"
+                                               placeholder="Dodaj plik"
+                                               type="file">
+                                        <div class="validation">
+                                            <span asp-validation-for="Cover"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <a asp-action="EditBrandImages" asp-controller="Admin">Edytuj zdjęcia</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-a">Zapisz!</button>
+                                </div>
+                            </div>
+                        </form>
+                        @*partial z linkami*@
+                        @await Html.PartialAsync("~/Views/Admin/Partials/_BrandLinks.cshtml", Model.Medias.ToList())
+                        @*pole do dodania jednego linku*@
+                        <div class="row">
+                            <div class="col-md-2 mb-3">
+                                <div class="form-group">
+                                    <label>Wybierz rodzaj</label>
+                                    <select asp-items="Html.GetEnumSelectList<Data.Enums.MediaType>()"
+                                            id="mediatype"
+                                            class="form-control form-control-lg form-control-a"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-7 mb-3">
+                                <div class="form-group">
+                                    <label>Dodaj link</label>
+                                    <input type="text"
+                                           class="form-control form-control-lg form-control-a"
+                                           placeholder="Podaj link"
+                                           id="mediaurl">
+                                </div>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-a" 
+                                            role="button"
+                                            type="button" onclick="brand.addBrandMedia('@Url.Action("AddBrandLink", "Admin")')">Dodaj link</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ Create brand end /-->
+@section Scripts {
+    <script src="~/js/brand.js" defer></script>
+}

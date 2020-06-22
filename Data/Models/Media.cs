@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Data.Enums;
+using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Data.Models
 {
 	public class Media : BaseModel
 	{
-		public string Name { get; set; }
+		public MediaType Type { get; set; }
+		[Url]
 		public string Link { get; set; }
-		/// <summary>
-		/// Media icon
-		/// </summary>
-		public Guid ImageId { get; set; }
-		[ForeignKey("ImageId")]
-		public Attachment Image { get; set; }
+		
+		[ForeignKey("BrandId")]
+		public Brand Brand { get; set; }
+		public Guid BrandId { get; set; }
 	}
 }

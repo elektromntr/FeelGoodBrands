@@ -1,0 +1,29 @@
+﻿@model List<Data.Models.Media>
+@using Data.Enums
+
+<section class="brand-links">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 section-t3">
+                <div class="row">
+                    <div class="col-md-7">
+                        @foreach (var link in Model)
+                        {
+                        <div class="row">
+                            <div class="col-md-2 mb-3">
+                                <span>@link.Type</span>
+                            </div>
+                            <div class="col-md-7 mb-3">
+                                <span>@link.Link</span>
+                            </div>
+                            <div class="col-md-3 mb-3 js-delete" id="@link.Id" data-url='@Url.Action("DeleteLink", "Admin")'>
+                                <span><i data-feather="trash"></i></span>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

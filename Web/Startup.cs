@@ -31,6 +31,7 @@ namespace Web
 				.AddEntityFrameworkStores<ApplicationDbContext>();
 			services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 			services.AddTransient<IBrandService, BrandService>();
+			services.AddTransient<IMediaService, MediaService>();
 			services.AddControllersWithViews().AddRazorRuntimeCompilation();
 			services.AddRazorPages();
 		}
