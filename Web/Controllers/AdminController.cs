@@ -7,11 +7,13 @@ using Data.Models;
 using Data.Repository;
 using Logic.DataTransferObjects;
 using Logic.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly IBrandService _brandService;
