@@ -1,4 +1,4 @@
-﻿@model Data.Models.Brand
+﻿@model Logic.DataTransferObjects.EditBrand
 
 @{
     ViewData["Title"] = "Edit Brand";
@@ -57,7 +57,7 @@
     </div>
 </section>
 <!--/ About End /-->
-<!--/ Create brand start /-->
+<!--/ Edit brand start /-->
 <section class="create-brand-form">
     <div class="container">
         <div class="row">
@@ -97,11 +97,8 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="form-group">
                                         <label>Zdjęcie główne</label>
-                                        <input asp-for="Cover"
+                                        <input asp-for="CoverUpdate"
                                                class="form-control"
-                                               cols="45" rows="8"
-                                               data-rule="required"
-                                               data-msg="Please write something for us"
                                                placeholder="Dodaj plik"
                                                type="file">
                                         <div class="validation">
@@ -110,7 +107,15 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <a asp-action="EditBrandImages" asp-controller="Admin">Edytuj zdjęcia</a>
+                                    <div class="form-group">
+                                        <label>Zdjęcia</label>
+                                        <input asp-for="ImagesUpdate"
+                                               class="form-control"
+                                               type="file" multiple>
+                                        <div class="validation">
+                                            <span asp-validation-for="ImagesUpdate"></span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-a">Zapisz!</button>
@@ -141,19 +146,25 @@
                             <div class="col-md-2 mb-3">
                                 <div class="form-group">
                                     <label>&nbsp;</label>
-                                    <button class="btn btn-a" 
+                                    <button class="btn btn-a"
                                             role="button"
-                                            type="button" onclick="brand.addBrandMedia('@Url.Action("AddBrandLink", "Admin")')">Dodaj link</button>
+                                            type="button" onclick="brand.addBrandMedia('@Url.Action("AddBrandLink", "Admin")')">
+                                        Dodaj link
+                                    </button>
                                 </div>
                             </div>
                         </div>
+                        @*partial ze zdjęciami*@
+                        @if (Model.Images != null && Model.Images.Count > 0) {
+                            @await Html.PartialAsync("~/Views/Admin/Partials/_BrandPhotos.cshtml", Model.Images.ToList());
+                        }
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!--/ Create brand end /-->
+<!--/ Edit brand end /-->
 @section Scripts {
     <script src="~/js/brand.js" defer></script>
 }

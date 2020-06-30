@@ -10,8 +10,8 @@ namespace Logic.Services.Interfaces
 {
     public interface IBrandService
     {
-        Task<Brand> Create(CreateBrandRequest newBrand);
+        Task<Brand> Create(CreateBrand newBrand);
         Task<Brand> GetById(Guid guid);
-        Task<Brand> Update(EditBrandRequest model);
+        Task<Brand> Update(EditBrand model);
     }
 }

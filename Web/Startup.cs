@@ -9,6 +9,8 @@ using Data.Configuration;
 using Data.Repository;
 using Logic.Services.Interfaces;
 using Logic.Services;
+using AutoMapper;
+using System;
 
 namespace Web
 {
@@ -32,6 +34,7 @@ namespace Web
 			services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 			services.AddTransient<IBrandService, BrandService>();
 			services.AddTransient<IMediaService, MediaService>();
+			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 			services.AddControllersWithViews().AddRazorRuntimeCompilation();
 			services.AddRazorPages();
 		}

@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Logic.Services
 {
@@ -23,7 +24,7 @@ namespace Logic.Services
             _attachmentRepository = attachmentRepository;
         }
 
-        public async Task<Brand> Create(CreateBrandRequest newBrand)
+        public async Task<Brand> Create(CreateBrand newBrand)
         {
             try
             {
@@ -32,34 +33,6 @@ namespace Logic.Services
 
                 var brandGuid = Guid.NewGuid();
                 
-                    //using (var memoryStream = new MemoryStream())
-                    //{
-                    //    await newBrand.Cover.CopyToAsync(memoryStream);
-
-                    //    // Upload the file if less than 2 MB
-                    //    if (memoryStream.Length < 2097152 && newBrand.Cover.ContentType == "image/jpeg")
-                    //    {
-                    //        var file = new Attachment()
-                    //        {
-                    //            FileData = memoryStream.ToArray(),
-                    //            FileMimeType = newBrand.Cover.ContentType,
-                    //            CreationDate = DateTime.Now,
-                    //            EditDate = DateTime.Now,
-                    //            Id = coverGuid,
-                    //            ReferenceId = brandGuid,
-                    //            Description = $"Cover image for {newBrand.Name} brand",
-                    //        };
-
-                    //        await _attachmentRepository.Add(file);
-
-                    //        await _attachmentRepository.SaveChangesAsync();
-                    //    }
-                    //    else
-                    //    {
-                    //        throw new Exception("File too large or wrong file type (only jpg allowed)");
-                    //    }
-                    //}
-
                 var brandToCreate = new Brand
                 {
                     CreationDate = DateTime.Now,
@@ -115,21 +88,74 @@ namespace Logic.Services
             }
         }
 
+        private async Task<bool> SaveImages(Guid brandGuid, string brandName, ICollection<IFormFile> images)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                foreach (var item in images)
+                {
+                    await item.CopyToAsync(memoryStream);
+                    var imageGuid = Guid.NewGuid();
+
+                    // Upload the file if less than 2 MB
+                    if (memoryStream.Length < 2097152 && item.ContentType == "image/jpeg")
+                    {
+                        var file = new Attachment()
+                        {
+                            FileData = memoryStream.ToArray(),
+                            FileMimeType = item.ContentType,
+                            CreationDate = DateTime.Now,
+                            EditDate = DateTime.Now,
+                            Id = imageGuid,
+                            ReferenceId = brandGuid,
+                            Description = $"Image for {brandName} brand",
+                        };
+
+                        await _attachmentRepository.Add(file);
+                    }
+                    else
+                    {
+                        throw new Exception("File too large or wrong file type (only jpg allowed)");
+                    }
+                } 
+                        await _attachmentRepository.SaveChangesAsync();
+            }
+            return true;
+        }
+
         public async Task<Brand> GetById(Guid guid) => _brandRepository.Get()
             .Where(i => i.Id == guid)
             .Include(b => b.Cover)
             .Include(b => b.Medias)
             .FirstOrDefault();
 
-        public async Task<Brand> Update(EditBrandRequest model)
+        public async Task<Brand> GetByIdWithImages(Guid guid)
+        {
+            var brand = _brandRepository.Get()
+            .Where(i => i.Id == guid)
+            .Include(b => b.Cover)
+            .Include(b => b.Medias)
+            .FirstOrDefault();
+            brand.Images = await _attachmentRepository.Get().Where(i => i.ReferenceId == brand.Id).ToListAsync();
+            return brand;
+        }
+
+        public async Task<Brand> Update(EditBrand model)
         {
             var dbBrand = await GetById(model.Id);
             dbBrand.Name = model.Name;
-            if (dbBrand.Cover != null)
+            if (model.CoverUpdate != null)
             {
-
+                dbBrand.CoverId = await SaveCover(model.Id, model.Name, model.CoverUpdate);
             }
-            return null;
+            _brandRepository.Update(dbBrand);
+            _brandRepository.SaveChanges();
+            bool imagesUpdate;
+            if (model.ImagesUpdate != null)
+            {
+                imagesUpdate = await SaveImages(model.Id, model.Name, model.ImagesUpdate);
+            }
+            return await GetByIdWithImages(model.Id);
         }
     }
 }

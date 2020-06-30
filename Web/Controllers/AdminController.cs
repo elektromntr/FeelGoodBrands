@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Data.Enums;
 using Data.Models;
 using Data.Repository;
@@ -19,14 +20,17 @@ namespace Web.Controllers
         private readonly IBrandService _brandService;
         private readonly IMediaService _mediaService;
         private readonly IRepository<Media> _mediaRepository;
-        
+        private readonly IMapper _mapper;
+
         public AdminController(IBrandService brandService,
             IMediaService mediaService,
-            IRepository<Media> mediaRepository)
+            IRepository<Media> mediaRepository,
+            IMapper mapper)
         {
             _brandService = brandService;
             _mediaService = mediaService;
             _mediaRepository = mediaRepository;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -36,7 +40,7 @@ namespace Web.Controllers
         public IActionResult CreateBrand() => View();
 
         [HttpPost]
-        public async Task<IActionResult> CreateBrand(CreateBrandRequest model)
+        public async Task<IActionResult> CreateBrand(CreateBrand model)
         {
             try
             {
@@ -55,7 +59,17 @@ namespace Web.Controllers
             try
             {
                 var brand = await _brandService.GetById(id);
-                return View(brand);
+                var brandToEdit = new EditBrand
+                {
+                    Cover = brand.Cover,
+                    Description = brand.Description,
+                    Id = brand.Id,
+                    Images = brand.Images,
+                    Name = brand.Name,
+                    CreationDate = brand.CreationDate,
+                    Medias = brand.Medias
+                };
+                return View(brandToEdit);
             }
             catch (Exception e)
             {
@@ -64,11 +78,12 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditBrand(EditBrandRequest editedBrand)
+        public async Task<IActionResult> EditBrand(EditBrand editedBrand)
         {
             if (!ModelState.IsValid) return View(editedBrand);
             var resultBrand = await _brandService.Update(editedBrand);
-            return View(resultBrand);
+            var mappedBrand = _mapper.Map<EditBrand>(resultBrand);
+            return View(mappedBrand);
         }
 
         public async Task<IActionResult> EditBrandLinks(Guid brandGuid)
