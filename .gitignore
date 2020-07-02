@@ -340,3 +340,5 @@ ASALocalRun/
 healthchecksdb
 /__EstateAgency
 /__Photos
+/Web/appsettingsAZR.json
+/Web/appsettingsAZR.Development.json
