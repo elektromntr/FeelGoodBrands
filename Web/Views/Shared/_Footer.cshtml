@@ -5,7 +5,7 @@
             <div class="col-sm-12 col-md-4">
                 <div class="widget-a">
                     <div class="w-header-a">
-                        <h3 class="w-title-a text-brand">EstateAgency</h3>
+                        <h3 class="w-title-a text-brand">materie<span class="color-b">*</span></h3>
                     </div>
                     <div class="w-body-a">
                         <p class="w-text-a color-text-a">
@@ -13,43 +13,21 @@
                             sed aute irure.
                         </p>
                     </div>
-                    <div class="w-footer-a">
-                        <ul class="list-unstyled">
-                            <li class="color-a">
-                                <span class="color-text-a">Phone .</span> contact@example.com
-                            </li>
-                            <li class="color-a">
-                                <span class="color-text-a">Email .</span> +54 356 945234
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
             <div class="col-sm-12 col-md-4 section-md-t3">
                 <div class="widget-a">
                     <div class="w-header-a">
-                        <h3 class="w-title-a text-brand">The Company</h3>
+                        <h3 class="w-title-a text-brand">kontakt</h3>
                     </div>
                     <div class="w-body-a">
                         <div class="w-body-a">
                             <ul class="list-unstyled">
-                                <li class="item-list-a">
-                                    <i class="fa fa-angle-right"></i> <a href="#">Site Map</a>
+                                <li class="color-a">
+                                    <span class="color-text-a">Email</span> contact@example.com
                                 </li>
-                                <li class="item-list-a">
-                                    <i class="fa fa-angle-right"></i> <a href="#">Legal</a>
-                                </li>
-                                <li class="item-list-a">
-                                    <i class="fa fa-angle-right"></i> <a href="#">Agent Admin</a>
-                                </li>
-                                <li class="item-list-a">
-                                    <i class="fa fa-angle-right"></i> <a href="#">Careers</a>
-                                </li>
-                                <li class="item-list-a">
-                                    <i class="fa fa-angle-right"></i> <a href="#">Affiliate</a>
-                                </li>
-                                <li class="item-list-a">
-                                    <i class="fa fa-angle-right"></i> <a href="#">Privacy Policy</a>
+                                <li class="color-a">
+                                    <span class="color-text-a">Telefon</span> <span class="color-b">+54 356 945234</span>
                                 </li>
                             </ul>
                         </div>
@@ -59,29 +37,11 @@
             <div class="col-sm-12 col-md-4 section-md-t3">
                 <div class="widget-a">
                     <div class="w-header-a">
-                        <h3 class="w-title-a text-brand">International sites</h3>
+                        <h3 class="w-title-a text-brand">adres</h3>
                     </div>
                     <div class="w-body-a">
-                        <ul class="list-unstyled">
-                            <li class="item-list-a">
-                                <i class="fa fa-angle-right"></i> <a href="#">Venezuela</a>
-                            </li>
-                            <li class="item-list-a">
-                                <i class="fa fa-angle-right"></i> <a href="#">China</a>
-                            </li>
-                            <li class="item-list-a">
-                                <i class="fa fa-angle-right"></i> <a href="#">Hong Kong</a>
-                            </li>
-                            <li class="item-list-a">
-                                <i class="fa fa-angle-right"></i> <a href="#">Argentina</a>
-                            </li>
-                            <li class="item-list-a">
-                                <i class="fa fa-angle-right"></i> <a href="#">Singapore</a>
-                            </li>
-                            <li class="item-list-a">
-                                <i class="fa fa-angle-right"></i> <a href="#">Philippines</a>
-                            </li>
-                        </ul>
+                        <p>Wrocław<br />
+                        ul. Kosmiczna 66</p>
                     </div>
                 </div>
             </div>
@@ -96,23 +56,17 @@
                 <nav class="nav-footer">
                     <ul class="list-inline">
                         <li class="list-inline-item">
-                            <a href="#">Home</a>
+                            <a asp-action="Index" asp-controller="Home">Główna</a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#">About</a>
+                            <a asp-action="About" asp-controller="Home">O nas</a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#">Property</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#">Blog</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#">Contact</a>
+                            <a asp-action="Contact" asp-controller="Home">Kontakt</a>
                         </li>
                     </ul>
                 </nav>
-                <div class="socials-a">
+                @*<div class="socials-a">
                     <ul class="list-inline">
                         <li class="list-inline-item">
                             <a href="#">
@@ -140,11 +94,11 @@
                             </a>
                         </li>
                     </ul>
-                </div>
+                </div>*@
                 <div class="copyright-footer">
                     <p class="copyright color-text-a">
-                        @DateTime.Now.Year &copy; Copyright
-                        <span class="color-a">FeelGoodBrands</span> All Rights Reserved.
+                        @DateTime.Now.Year &copy; <span class="color-a">Materie</span>
+                        <br />Wszelkie prawa zastrzeżone.
                     </p>
                 </div>
                 <div class="credits">

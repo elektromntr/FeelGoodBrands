@@ -74,6 +74,7 @@ namespace Logic.Services
                         Id = coverGuid,
                         ReferenceId = brandGuid,
                         Description = $"Cover image for {brandName} brand",
+                        Type = Data.Enums.AttachmentType.Cover
                     };
 
                     await _attachmentRepository.Add(file);
@@ -109,6 +110,7 @@ namespace Logic.Services
                             Id = imageGuid,
                             ReferenceId = brandGuid,
                             Description = $"Image for {brandName} brand",
+                            Type = Data.Enums.AttachmentType.Regular
                         };
 
                         await _attachmentRepository.Add(file);
@@ -137,6 +139,13 @@ namespace Logic.Services
             .Include(b => b.Medias)
             .FirstOrDefault();
             brand.Images = await _attachmentRepository.Get().Where(i => i.ReferenceId == brand.Id).ToListAsync();
+            return brand;
+        }
+
+        public async Task<Brand> GetByName(string name)
+        {
+            var guid = _brandRepository.Get().FirstOrDefault(b => b.Name.Replace(" ", "") == name).Id;
+            var brand = await GetByIdWithImages(guid);
             return brand;
         }
 

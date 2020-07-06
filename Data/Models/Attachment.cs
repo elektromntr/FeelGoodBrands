@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Enums;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
@@ -9,5 +10,6 @@ namespace Data.Models
 		public string FileMimeType { get; set; }
 		public Guid ReferenceId { get; set; }
 		public string Description { get; set; }
+		public AttachmentType Type { get; set; }
 	}
 }

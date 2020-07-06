@@ -1,0 +1,63 @@
+﻿@model Logic.DataTransferObjects.BrandViewModel
+
+@ViewBag.Title = "@Model.Name";
+
+<section class="section-cover">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="about-img-box">
+                    <img src="data:@Model.Cover.FileMimeType;base64,@System.Convert.ToBase64String(Model.Cover.FileData)" 
+                         alt="@Model.Name cover image" 
+                         class="img-fluid">
+                </div>
+                <div class="sinse-box">
+                    <h3 class="sinse-title">
+                        @Model.Name
+                        <span></span>
+                        <br>
+                    </h3>
+                    <p>Z nami od @Model.CreationDate.Year</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="about">
+    <div class="container">
+        <div class="col-md-12 section-t8">
+            <div class="row">
+                <div class="col-md-6 col-lg-6">
+                    <img src="data:@Model.Images.FirstOrDefault(@*i => i.Type == Data.Enums.AttachmentType.Main*@).FileMimeType;base64,@System.Convert.ToBase64String(Model.Images.FirstOrDefault(@*i => i.Type == Data.Enums.AttachmentType.Main*@).FileData)"
+                         alt="@Model.Name main image"
+                         class="img-fluid mb-3"
+                         style="object-fit: cover;">
+                </div>
+                @*<div class="col-lg-2  d-none d-lg-block">
+                        <div class="title-vertical d-flex justify-content-start">
+                            <span>Exclusive content</span>
+                        </div>
+                    </div>*@
+            <div class="col-md-6 col-lg-6 section-md-t3">
+                <div class="title-box-d">
+                    <h3 class="title-d">
+                        Sed
+                        <span class="color-d">porttitor</span> lectus
+                        <br> nibh.
+                    </h3>
+                </div>
+                <p class="color-text-a">
+                    @Model.Description
+                </p>
+                <ul class="list-unstyled">
+                @foreach (var media in Model.Medias)
+                {
+                        <li class="item-list-a">
+                            <i class="fa fa-angle-right"></i> <a href='https://@media.Link'>@media.Link</a>
+                        </li>
+                }
+                </div>
+            </div>
+        </div>
+        </div>
+</section>

@@ -13,5 +13,7 @@ namespace Logic.Services.Interfaces
         Task<Brand> Create(CreateBrand newBrand);
         Task<Brand> GetById(Guid guid);
         Task<Brand> Update(EditBrand model);
+        Task<Brand> GetByIdWithImages(Guid guid);
+        Task<Brand> GetByName(string name);
     }
 }

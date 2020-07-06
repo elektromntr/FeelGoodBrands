@@ -12,6 +12,7 @@ namespace Logic.Maps
         public BrandProfile()
         {
             CreateMap<Brand, EditBrand>();
+            CreateMap<Brand, BrandViewModel>();
         }
     }
 }
