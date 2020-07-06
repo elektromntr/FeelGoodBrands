@@ -21,7 +21,7 @@
                                             @brand.Name
                                         </h1>
                                         <p class="intro-subtitle intro-price">
-                                            <a href="#"><span class="price-a">See details</span></a>
+                                            <a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")"><span class="price-a">Zobacz</span></a>
                                         </p>
                                     </div>
                                 </div>

@@ -2,10 +2,10 @@
 
 @ViewBag.Title = "@Model.Name";
 
-<section class="section-cover">
+<section class="section-cover section-t8">
     <div class="container">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-12  mt-4">
                 <div class="about-img-box">
                     <img src="data:@Model.Cover.FileMimeType;base64,@System.Convert.ToBase64String(Model.Cover.FileData)" 
                          alt="@Model.Name cover image" 
@@ -23,6 +23,7 @@
         </div>
     </div>
 </section>
+
 <section id="about">
     <div class="container">
         <div class="col-md-12 section-t8">
@@ -38,26 +39,48 @@
                             <span>Exclusive content</span>
                         </div>
                     </div>*@
-            <div class="col-md-6 col-lg-6 section-md-t3">
-                <div class="title-box-d">
-                    <h3 class="title-d">
-                        Sed
-                        <span class="color-d">porttitor</span> lectus
-                        <br> nibh.
-                    </h3>
-                </div>
-                <p class="color-text-a">
-                    @Model.Description
-                </p>
-                <ul class="list-unstyled">
-                @foreach (var media in Model.Medias)
-                {
-                        <li class="item-list-a">
-                            <i class="fa fa-angle-right"></i> <a href='https://@media.Link'>@media.Link</a>
-                        </li>
-                }
+                <div class="col-md-6 col-lg-6">
+                    <div class="title-box-d">
+                        <h3 class="title-d">
+                            @Model.Name
+                        </h3>
+                    </div>
+                    <div class="color-text-a">
+                        @Model.Description
+                    </div>
+                    <div class="section-t3">
+                        <ul class="list-unstyled">
+                            @foreach (var media in Model.Medias)
+                            {
+                                <li class="item-list-a">
+                                    <a href='https://@media.Link' target="_blank"><i class="fa fa-@media.Type.ToString()"></i> @media.Link</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 </section>
+@if (Model.Images != null && Model.Images.Count > 0) {
+    @await Html.PartialAsync("~/Views/Admin/Partials/_BrandPhotos.cshtml", Model.Images.ToList());
+}
+@if (User.Identity.IsAuthenticated)
+{
+    <section class="admin mb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-4">
+                    <a asp-controller="Admin" asp-action="EditBrand" asp-route-id="@Model.Id">
+                        <button class="btn btn-a"
+                                role="button"
+                                type="button">
+                            Edytuj brand
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+}

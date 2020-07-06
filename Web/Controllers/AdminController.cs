@@ -20,17 +20,20 @@ namespace Web.Controllers
         private readonly IBrandService _brandService;
         private readonly IMediaService _mediaService;
         private readonly IRepository<Media> _mediaRepository;
+        private readonly IRepository<Attachment> _attachmentRepository;
         private readonly IMapper _mapper;
 
         public AdminController(IBrandService brandService,
             IMediaService mediaService,
             IRepository<Media> mediaRepository,
+            IRepository<Attachment> attachmentRepository,
             IMapper mapper)
         {
             _brandService = brandService;
             _mediaService = mediaService;
             _mediaRepository = mediaRepository;
             _mapper = mapper;
+            _attachmentRepository = attachmentRepository;
         }
         public IActionResult Index()
         {
@@ -54,6 +57,8 @@ namespace Web.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("Admin/EditBrand/{id:Guid}")]
         public async Task<IActionResult> EditBrand(Guid id)
         {
             try
@@ -109,6 +114,14 @@ namespace Web.Controllers
         {
             var links = await _mediaService.Delete(new Guid(linkId));
             return PartialView("~/Views/Admin/Partials/_BrandLinks.cshtml", links);
+        }
+        
+        public async Task<IActionResult> DeletePhoto(string photoId)
+        {
+            var refGuid = _attachmentRepository.Get().FirstOrDefault(p => p.Id == new Guid(photoId))?.ReferenceId;
+            await _attachmentRepository.Delete(new Guid(photoId));
+            var photos = _attachmentRepository.Get().Where(a => a.ReferenceId == refGuid).ToList();
+            return PartialView("~/Views/Admin/Partials/_BrandPhotos.cshtml", photos);
         }
     }
 }

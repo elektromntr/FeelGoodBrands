@@ -10,62 +10,28 @@
                         <div class="card-img-d">
                             <img src="data:@photo.FileMimeType;base64,@System.Convert.ToBase64String(photo.FileData)" alt="@photo.Description" class="img-d img-fluid">
                         </div>
-                        <div class="card-overlay card-overlay-hover">
-                            @*<div class="card-header-d">
-                                <div class="card-title-d align-self-center">
-                                    <h3 class="title-d">
-                                        <a href="#" class="link-two">
-                                            Margaret Sotillo
-                                            <br> Escala
-                                        </a>
-                                    </h3>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="card-overlay card-overlay-hover">
+                                <div class="card-footer-d">
+                                    <div class="socials-footer d-flex justify-content-center">
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item">
+                                                <div class="js-delete-photo" data-id="@photo.Id" data-url='@Url.Action("DeletePhoto", "Admin")'>
+                                                    <i class="fa fa-trash" aria-hidden="true"></i> usuń
+                                                </div>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                    <i class="fa fa-square" aria-hidden="true"></i> cover
+                                            </li>
+                                            <li class="list-inline-item">
+                                                    <i class="fa fa-circle" aria-hidden="true"></i> main
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>*@
-                            <div class="card-body-d">
-                                <p class="content-d color-text-a">
-                                    @photo.Description
-                                </p>
-                                @*<div class="info-agents color-a">
-                                    <p>
-                                        <strong>Phone: </strong> +54 356 945234
-                                    </p>
-                                    <p>
-                                        <strong>Email: </strong> agents@example.com
-                                    </p>
-                                </div>*@
                             </div>
-                            @*<div class="card-footer-d">
-                                <div class="socials-footer d-flex justify-content-center">
-                                    <ul class="list-inline">
-                                        <li class="list-inline-item">
-                                            <a href="#" class="link-one">
-                                                <i class="fa fa-facebook" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#" class="link-one">
-                                                <i class="fa fa-twitter" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#" class="link-one">
-                                                <i class="fa fa-instagram" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#" class="link-one">
-                                                <i class="fa fa-pinterest-p" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#" class="link-one">
-                                                <i class="fa fa-dribbble" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>*@
-                        </div>
+                        }
                     </div>
                 </div>
                 } @*Foreach end*@

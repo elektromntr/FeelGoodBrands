@@ -1,9 +1,12 @@
 ﻿(function (brand, $) {
-    brand.refreshBrandLinksPartial = () => {
+    brand.refreshBrandPartial = () => {
         feather.replace();
 
-        $('.js-delete').on('click', function (e) {
+        $('.js-delete-link').on('click', function (e) {
             brand.deleteLink(e);
+        });
+        $('.js-delete-photo').on('click', function (e) {
+            brand.deletePhoto(e);
         });
     };
 
@@ -16,7 +19,24 @@
             },
             success: function (result) {
                 $('section .brand-links').html(result);
-                brand.refreshBrandLinksPartial();
+                brand.refreshBrandPartial();
+            },
+            error: function (result) {
+                console.warn(result);
+            }
+        });
+    };
+
+    brand.deletePhoto = (e) => {
+        $.ajax({
+            type: "POST",
+            url: e.currentTarget.attributes['data-url'].value,
+            data: {
+                linkId: e.currentTarget.attributes['id'].value
+            },
+            success: function (result) {
+                $('section .brand-photos').html(result);
+                brand.refreshBrandPartial();
             },
             error: function (result) {
                 console.warn(result);

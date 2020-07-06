@@ -6,9 +6,10 @@ namespace Data.Enums
 {
     public enum MediaType
     {
-        WWW = 0,
-        Facebook = 1,
-        Instagram = 3,
-        YouTube = 4,
+        globe = 0,
+        facebook = 1,
+        instagram = 3,
+        youtube = 4,
+        twitter = 5
     }
 }
