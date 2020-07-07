@@ -92,37 +92,35 @@ namespace Logic.Services
 
         private async Task<bool> SaveImages(Guid brandGuid, string brandName, ICollection<IFormFile> images)
         {
-            using (var memoryStream = new MemoryStream())
+            foreach (var item in images)
             {
-                foreach (var item in images)
+                await using var memoryStream = new MemoryStream();
+                await item.CopyToAsync(memoryStream);
+                var imageGuid = Guid.NewGuid();
+
+                // Upload the file if less than 2 MB
+                if (memoryStream.Length < 2097152 && item.ContentType == "image/jpeg")
                 {
-                    await item.CopyToAsync(memoryStream);
-                    var imageGuid = Guid.NewGuid();
-
-                    // Upload the file if less than 2 MB
-                    if (memoryStream.Length < 2097152 && item.ContentType == "image/jpeg")
+                    var file = new Attachment()
                     {
-                        var file = new Attachment()
-                        {
-                            FileData = memoryStream.ToArray(),
-                            FileMimeType = item.ContentType,
-                            CreationDate = DateTime.Now,
-                            EditDate = DateTime.Now,
-                            Id = imageGuid,
-                            ReferenceId = brandGuid,
-                            Description = $"Image for {brandName} brand",
-                            Type = Data.Enums.AttachmentType.Regular
-                        };
+                        FileData = memoryStream.ToArray(),
+                        FileMimeType = item.ContentType,
+                        CreationDate = DateTime.Now,
+                        EditDate = DateTime.Now,
+                        Id = imageGuid,
+                        ReferenceId = brandGuid,
+                        Description = $"Image for {brandName} brand",
+                        Type = Data.Enums.AttachmentType.Regular
+                    };
 
-                        await _attachmentRepository.Add(file);
-                    }
-                    else
-                    {
-                        throw new Exception("File too large or wrong file type (only jpg allowed)");
-                    }
-                } 
-                        await _attachmentRepository.SaveChangesAsync();
+                    await _attachmentRepository.Add(file);
+                }
+                else
+                {
+                    throw new Exception("File too large or wrong file type (only jpg allowed)");
+                }
             }
+            await _attachmentRepository.SaveChangesAsync();
             return true;
         }
 
