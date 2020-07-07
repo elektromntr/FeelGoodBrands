@@ -30,7 +30,6 @@
         } else {
             return false;
         }
-        return true;
     };
 
     brand.deletePhoto = (e) => {
@@ -44,7 +43,7 @@
                 },
                 success: function(result) {
                     debugger;
-                    $('section .brand-photos').html(result);
+                    $('.brand-photos').html(result);
                     brand.refreshBrandPartial();
                 },
                 error: function(result) {
@@ -54,7 +53,6 @@
         } else {
             return false;
         }
-        return true;
     };
 
     brand.addBrandMedia = (url) => {

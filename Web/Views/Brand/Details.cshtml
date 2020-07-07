@@ -28,25 +28,25 @@
     <div class="container">
         <div class="col-md-12 section-t8">
             <div class="row">
-                <div class="col-md-6 col-lg-6">
-                    <img src="data:@Model.Images.FirstOrDefault(@*i => i.Type == Data.Enums.AttachmentType.Main*@).FileMimeType;base64,@System.Convert.ToBase64String(Model.Images.FirstOrDefault(@*i => i.Type == Data.Enums.AttachmentType.Main*@).FileData)"
+                @*<div class="col-md-6 col-lg-6">
+                    <img src="data:@Model.Images.FirstOrDefault(i => i.Type == Data.Enums.AttachmentType.Main).FileMimeType;base64,@System.Convert.ToBase64String(Model.Images.FirstOrDefault(i => i.Type == Data.Enums.AttachmentType.Main).FileData)"
                          alt="@Model.Name main image"
                          class="img-fluid mb-3"
                          style="object-fit: cover;">
-                </div>
+                </div>*@
                 @*<div class="col-lg-2  d-none d-lg-block">
                         <div class="title-vertical d-flex justify-content-start">
                             <span>Exclusive content</span>
                         </div>
                     </div>*@
-                <div class="col-md-6 col-lg-6">
+                <div class="col-md-12 col-lg-12">
                     <div class="title-box-d">
                         <h3 class="title-d">
-                            @Model.Name
+                            Szczegóły
                         </h3>
                     </div>
                     <div class="color-text-a">
-                        @Model.Description
+                        @Html.Raw(@Model.Description)
                     </div>
                     <div class="section-t3">
                         <ul class="list-unstyled">

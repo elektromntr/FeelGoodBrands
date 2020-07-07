@@ -85,12 +85,6 @@ namespace Web.Controllers
             return View(mappedBrand);
         }
 
-        public async Task<IActionResult> EditBrandLinks(Guid brandGuid)
-        {
-            var links = await _mediaRepository.Get().Where(m => m.BrandId == brandGuid).ToListAsync();
-            return View(links);
-        }
-
         [HttpPost]
         public IActionResult EditBrandLinks(List<Media> media)
         {

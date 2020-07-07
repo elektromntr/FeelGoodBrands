@@ -2023,3 +2023,7 @@ footer .credits {
     font-size: 1.3rem;
   }
 }
+
+div [class*="js"]:hover {
+    cursor: pointer;
+}

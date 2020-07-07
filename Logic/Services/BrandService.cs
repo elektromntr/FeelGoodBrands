@@ -155,7 +155,11 @@ namespace Logic.Services
         public async Task<Brand> Update(EditBrand model)
         {
             var dbBrand = await GetById(model.Id);
+            
             dbBrand.Name = model.Name;
+            dbBrand.Description = model.Description;
+            dbBrand.EditDate = DateTime.Now;
+            
             if (model.CoverUpdate != null)
             {
                 dbBrand.CoverId = await SaveCover(model.Id, model.Name, model.CoverUpdate);

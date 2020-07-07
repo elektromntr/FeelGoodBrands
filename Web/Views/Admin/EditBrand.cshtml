@@ -86,8 +86,6 @@
                                         <textarea asp-for="Description"
                                                   class="form-control"
                                                   cols="45" rows="8"
-                                                  data-rule="required"
-                                                  data-msg="Please write something for us"
                                                   placeholder="Opis"></textarea>
                                         <div class="validation">
                                             <span asp-validation-for="Description"></span>
@@ -112,9 +110,6 @@
                                         <input asp-for="ImagesUpdate"
                                                class="form-control"
                                                type="file" multiple>
-                                        <div class="validation">
-                                            <span asp-validation-for="ImagesUpdate"></span>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
