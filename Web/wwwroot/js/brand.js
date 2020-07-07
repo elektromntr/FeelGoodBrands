@@ -1,47 +1,60 @@
 ﻿(function (brand, $) {
     brand.refreshBrandPartial = () => {
         feather.replace();
-
         $('.js-delete-link').on('click', function (e) {
             brand.deleteLink(e);
         });
         $('.js-delete-photo').on('click', function (e) {
             brand.deletePhoto(e);
         });
+        console.log('refreshBrandPartial');
     };
 
     brand.deleteLink = (e) => {
-        $.ajax({
-            type: "POST",
-            url: e.currentTarget.attributes['data-url'].value,
-            data: {
-                linkId: e.currentTarget.attributes['id'].value
-            },
-            success: function (result) {
-                $('section .brand-links').html(result);
-                brand.refreshBrandPartial();
-            },
-            error: function (result) {
-                console.warn(result);
-            }
-        });
+        var c = confirm("Chcesz usunąć link?");
+        if (c === true) {
+            $.ajax({
+                type: "POST",
+                url: e.currentTarget.attributes['data-url'].value,
+                data: {
+                    linkId: e.currentTarget.attributes['id'].value
+                },
+                success: function(result) {
+                    $('section .brand-links').html(result);
+                    brand.refreshBrandPartial();
+                },
+                error: function(result) {
+                    console.warn(result);
+                }
+            });
+        } else {
+            return false;
+        }
+        return true;
     };
 
     brand.deletePhoto = (e) => {
-        $.ajax({
-            type: "POST",
-            url: e.currentTarget.attributes['data-url'].value,
-            data: {
-                linkId: e.currentTarget.attributes['id'].value
-            },
-            success: function (result) {
-                $('section .brand-photos').html(result);
-                brand.refreshBrandPartial();
-            },
-            error: function (result) {
-                console.warn(result);
-            }
-        });
+        var c = confirm("Chcesz usunąć zdjęcie?");
+        if (c === true) {
+            $.ajax({
+                type: "POST",
+                url: e.currentTarget.attributes['data-url'].value,
+                data: {
+                    photoId: e.currentTarget.attributes['id'].value
+                },
+                success: function(result) {
+                    debugger;
+                    $('section .brand-photos').html(result);
+                    brand.refreshBrandPartial();
+                },
+                error: function(result) {
+                    console.warn(result);
+                }
+            });
+        } else {
+            return false;
+        }
+        return true;
     };
 
     brand.addBrandMedia = (url) => {
@@ -58,7 +71,7 @@
             },
             success: function (result) {
                 $('section .brand-links').html(result);
-                brand.refreshBrandLinksPartial();
+                brand.refreshBrandPartial();
             },
             error: function (result) {
                 console.warn(result);
@@ -67,6 +80,6 @@
     }
 
     $(document).ready(() => {
-        brand.refreshBrandLinksPartial();
+        brand.refreshBrandPartial();
     });
 })(window.brand = window.brand || {}, jQuery);

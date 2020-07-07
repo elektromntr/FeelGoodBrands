@@ -7,8 +7,8 @@
         <div class="row">
             <div class="col-sm-12  mt-4">
                 <div class="about-img-box">
-                    <img src="data:@Model.Cover.FileMimeType;base64,@System.Convert.ToBase64String(Model.Cover.FileData)" 
-                         alt="@Model.Name cover image" 
+                    <img src="data:@Model.Cover.FileMimeType;base64,@System.Convert.ToBase64String(Model.Cover.FileData)"
+                         alt="@Model.Name cover image"
                          class="img-fluid">
                 </div>
                 <div class="sinse-box">
@@ -63,7 +63,8 @@
         </div>
     </div>
 </section>
-@if (Model.Images != null && Model.Images.Count > 0) {
+@if (Model.Images != null && Model.Images.Count > 0)
+{
     @await Html.PartialAsync("~/Views/Admin/Partials/_BrandPhotos.cshtml", Model.Images.ToList());
 }
 @if (User.Identity.IsAuthenticated)
@@ -83,4 +84,8 @@
             </div>
         </div>
     </section>
+}
+
+@section Scripts {
+    <script src="~/js/brand.js" defer></script>
 }

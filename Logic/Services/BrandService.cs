@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Data.Enums;
 
 namespace Logic.Services
 {
@@ -138,7 +139,9 @@ namespace Logic.Services
             .Include(b => b.Cover)
             .Include(b => b.Medias)
             .FirstOrDefault();
-            brand.Images = await _attachmentRepository.Get().Where(i => i.ReferenceId == brand.Id).ToListAsync();
+            brand.Images = await _attachmentRepository.Get()
+                .Where(i => i.ReferenceId == brand.Id 
+                            && i.Type != AttachmentType.Cover).ToListAsync();
             return brand;
         }
 

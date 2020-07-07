@@ -19,18 +19,21 @@ namespace Web.Controllers
     {
         private readonly IBrandService _brandService;
         private readonly IMediaService _mediaService;
+        private readonly IAttachmentService _attachmentService;
         private readonly IRepository<Media> _mediaRepository;
         private readonly IRepository<Attachment> _attachmentRepository;
         private readonly IMapper _mapper;
 
         public AdminController(IBrandService brandService,
             IMediaService mediaService,
+            IAttachmentService attachmentService,
             IRepository<Media> mediaRepository,
             IRepository<Attachment> attachmentRepository,
             IMapper mapper)
         {
             _brandService = brandService;
             _mediaService = mediaService;
+            _attachmentService = attachmentService;
             _mediaRepository = mediaRepository;
             _mapper = mapper;
             _attachmentRepository = attachmentRepository;
@@ -63,17 +66,8 @@ namespace Web.Controllers
         {
             try
             {
-                var brand = await _brandService.GetById(id);
-                var brandToEdit = new EditBrand
-                {
-                    Cover = brand.Cover,
-                    Description = brand.Description,
-                    Id = brand.Id,
-                    Images = brand.Images,
-                    Name = brand.Name,
-                    CreationDate = brand.CreationDate,
-                    Medias = brand.Medias
-                };
+                var brand = await _brandService.GetByIdWithImages(id);
+                var brandToEdit = _mapper.Map<EditBrand>(brand);
                 return View(brandToEdit);
             }
             catch (Exception e)
@@ -118,9 +112,8 @@ namespace Web.Controllers
         
         public async Task<IActionResult> DeletePhoto(string photoId)
         {
-            var refGuid = _attachmentRepository.Get().FirstOrDefault(p => p.Id == new Guid(photoId))?.ReferenceId;
-            await _attachmentRepository.Delete(new Guid(photoId));
-            var photos = _attachmentRepository.Get().Where(a => a.ReferenceId == refGuid).ToList();
+            if (photoId == String.Empty) throw new Exception("No photo Id");
+            var photos = await _attachmentService.Delete(new Guid(photoId));
             return PartialView("~/Views/Admin/Partials/_BrandPhotos.cshtml", photos);
         }
     }

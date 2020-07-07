@@ -34,6 +34,7 @@ namespace Web
 			services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 			services.AddTransient<IBrandService, BrandService>();
 			services.AddTransient<IMediaService, MediaService>();
+			services.AddTransient<IAttachmentService, AttachmentService>();
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 			services.AddControllersWithViews().AddRazorRuntimeCompilation();
 			services.AddRazorPages();

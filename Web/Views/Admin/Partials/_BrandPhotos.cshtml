@@ -1,10 +1,10 @@
 ﻿@model List<Data.Models.Attachment>
 
-    <section class="brand-photos grid">
-        <div class="container">
-            <div class="row">
-                @foreach (var photo in Model)
-                {
+<section class="brand-photos grid">
+    <div class="container">
+        <div class="row">
+            @foreach (var photo in Model)
+            {
                 <div class="col-md-4 section-t3">
                     <div class="card-box-d">
                         <div class="card-img-d">
@@ -17,9 +17,9 @@
                                     <div class="socials-footer d-flex justify-content-center">
                                         <ul class="list-inline">
                                             <li class="list-inline-item">
-                                                <div class="js-delete-photo" data-id="@photo.Id" data-url='@Url.Action("DeletePhoto", "Admin")'>
+                                                <a class="js-delete-photo" id="@photo.Id" data-url='@Url.Action("DeletePhoto", "Admin")'>
                                                     <i class="fa fa-trash" aria-hidden="true"></i> usuń
-                                                </div>
+                                                </a>
                                             </li>
                                             <li class="list-inline-item">
                                                     <i class="fa fa-square" aria-hidden="true"></i> cover
@@ -31,10 +31,18 @@
                                     </div>
                                 </div>
                             </div>
+                            @*<div>
+                                <div class="js-delete-photo" id="@photo.Id" data-url='@Url.Action("DeletePhoto", "Admin")'>
+                                    <i class="fa fa-trash" aria-hidden="true"></i> usuń
+                                </div>
+                            </div>*@
                         }
                     </div>
                 </div>
-                } @*Foreach end*@
-            </div>
+            } @*Foreach end*@
         </div>
-    </section>
+    </div>
+</section>
+<script>
+    console.log("brandPhotos");
+</script>
