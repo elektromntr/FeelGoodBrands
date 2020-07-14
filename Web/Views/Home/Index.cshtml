@@ -3,6 +3,11 @@
 }
 <!--/ Carousel Star /-->
 
-        @await Component.InvokeAsync("BrandsCarousel")
+@await Component.InvokeAsync("BrandsCarousel")
 
 <!--/ Carousel end /-->
+
+@await Html.PartialAsync("~/Views/Home/Partials/_Contact.cshtml");
+@section Scripts {
+    <script src="~/js/contact.js" defer></script>
+}

@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Data.Models;
 using Data.Repository;
+using Logic.DataTransferObjects;
 using Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -37,6 +38,11 @@ namespace Web.Controllers
 		{
 			return View();
 		}
+
+        public JsonResult ContactMe([FromBody] ContactMeViewModel contact)
+        {
+            return Json(new {Error = false, contact});
+        }
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()

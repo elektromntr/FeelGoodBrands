@@ -1,0 +1,35 @@
+﻿<section class="contact-form">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 section-tb85">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row" 
+                             id="contact-form">
+                            <div class="col-md-9 mb-3">
+                                <div class="form-group">
+                                    <label>Wyślij nam swój kontakt, a wrócimy do Ciebie z ofertą</label>
+                                    <input type="text"
+                                           class="form-control form-control-lg form-control-a"
+                                           placeholder="Podaj nr telefonu"
+                                           id="contact-input"
+                                           style="height: 59px;">
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-a col-md-12"
+                                            role="button"
+                                            type="button" onclick="contact.contactMe('@Url.Action("ContactMe", "Home")')">
+                                        Wyślij
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
