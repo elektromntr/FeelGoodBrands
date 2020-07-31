@@ -30,8 +30,9 @@ namespace Web.Controllers
 		}
 
 		public async Task<IActionResult> Index()
-		{
-			return View();
+        {
+            var brands = await _brandService.GetAll();
+			return View(brands);
 		}
 
 		public IActionResult Privacy()

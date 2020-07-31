@@ -171,5 +171,12 @@ namespace Logic.Services
             }
             return await GetByIdWithImages(model.Id);
         }
+
+        public async Task<List<Brand>> GetAll() => await 
+            _brandRepository.Get()
+                .Include(b => b.Images)
+                .Include(b => b.Cover)
+                .Where(b => b.CoverId != null && b.CoverId != System.Guid.Empty).ToListAsync();
+        
     }
 }
