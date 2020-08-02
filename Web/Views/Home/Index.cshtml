@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <div class="row">
+                <div class="row brand-intro-box">
                     <div class="col-md-6">
                         <div class="agent-avatar-box">
                             <img src="data:@brand.Cover.FileMimeType;base64,@System.Convert.ToBase64String(brand.Cover.FileData)" 
@@ -28,11 +28,20 @@
                                     </h3>
                                 </div>
                             </div>
-                            <div class="agent-content mb-3">
+                            <div class="agent-content">
                                 <p class="content-d color-text-a">
-                                    @brand.Description
+                                    @if (brand.Description.Length > 500)
+                                    {
+                                    <span>@Html.Raw(brand.Description.Substring(0, 500)) [...]</span>
+                                    }
+                                    else 
+                                    {
+                                        <span>@Html.Raw(brand.Description)</span>
+                                    }
                                 </p>
-                        
+                                <p class="intro-subtitle intro-price socials-footer">
+                                    <a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")"><span class="price-b">Zobacz</span></a>
+                                </p>
                             </div>
                     
                         </div>

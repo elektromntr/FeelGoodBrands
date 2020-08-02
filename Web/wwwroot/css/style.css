@@ -1066,6 +1066,21 @@ a:hover {
   letter-spacing: 0.030em;
 }
 
+.price-b {
+    color: #95adbe;
+    padding: .6rem .8rem;
+    border: 2px solid #95adbe;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.030em;
+    transition: all .75s ease;
+}
+
+.price-b:hover {
+    color: #000;
+    transition: all .75s ease;
+}
+
 .card-footer-a {
   width: 100%;
   position: absolute;
@@ -1381,8 +1396,13 @@ a:hover {
 
 /*------/ Agent Single /------*/
 
+.brand-intro-box {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
 .agent-info-box .socials-footer {
-  margin-top: 2rem;
+    margin-top: 2rem;
 }
 
 .agent-info-box .socials-footer li {
