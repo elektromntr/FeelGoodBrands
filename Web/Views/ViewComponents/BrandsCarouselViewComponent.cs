@@ -20,7 +20,9 @@ namespace Web.Views.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var model = _brandRepository.Get()
-                .Where(b => b.CoverId != null && b.CoverId != System.Guid.Empty)
+                .Where(b => b.CoverId != null 
+                            && b.CoverId != System.Guid.Empty
+                            && !b.Archived)
                 .OrderByDescending(b=>b.CreationDate)
                 .Take(3)
                 .ToList();

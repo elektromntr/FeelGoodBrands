@@ -176,7 +176,9 @@ namespace Logic.Services
             _brandRepository.Get()
                 .Include(b => b.Images)
                 .Include(b => b.Cover)
-                .Where(b => b.CoverId != null && b.CoverId != System.Guid.Empty).ToListAsync();
+                .Where(b => b.CoverId != null 
+                            && b.CoverId != System.Guid.Empty
+                            && !b.Archived).ToListAsync();
         
     }
 }
