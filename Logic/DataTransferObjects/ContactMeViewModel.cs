@@ -3,6 +3,7 @@ namespace Logic.DataTransferObjects
 {
     public class ContactMeViewModel
     {
-        public string contact { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
     }
 }

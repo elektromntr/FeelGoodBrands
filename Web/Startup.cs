@@ -35,6 +35,7 @@ namespace Web
 			services.AddTransient<IBrandService, BrandService>();
 			services.AddTransient<IMediaService, MediaService>();
 			services.AddTransient<IAttachmentService, AttachmentService>();
+			services.AddTransient<IEmailService, EmailService>();
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 			services.AddControllersWithViews().AddRazorRuntimeCompilation();
 			services.AddRazorPages();

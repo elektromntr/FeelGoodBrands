@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Data.Models;
 using Data.Repository;
 using Logic.DataTransferObjects;
+using Logic.Services;
 using Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,17 +18,20 @@ namespace Web.Controllers
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
+        private readonly IEmailService _emailService;
 		private readonly IBrandService _brandService;
 		private readonly IRepository<Attachment> _attachmentRepository;
 
 		public HomeController(ILogger<HomeController> logger,
 							  IBrandService brandService,
-							  IRepository<Attachment> attachmentRepository)
+							  IRepository<Attachment> attachmentRepository,
+                              IEmailService emailService)
 		{
 			_logger = logger;
 			_brandService = brandService;
 			_attachmentRepository = attachmentRepository;
-		}
+            _emailService = emailService;
+        }
 
 		public async Task<IActionResult> Index()
         {
@@ -40,8 +44,10 @@ namespace Web.Controllers
 			return View();
 		}
 
+		[HttpPost]
         public JsonResult ContactMe([FromBody] ContactMeViewModel contact)
         {
+            _emailService.ContactMe(contact);
             return Json(new {Error = false, contact});
         }
 

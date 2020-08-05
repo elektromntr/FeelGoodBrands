@@ -1,17 +1,31 @@
 ﻿(function (contact, $) {
 
     contact.contactMe = (url) => {
+        debugger;
         var contact =
         {
-            contact: $('#contact-input').val()
+            Email: $('#contact-email').val(),
+            Phone: $('#contact-phone').val(),
         }
+        if (contact.Phone !== "" && (!$.isNumeric(contact.Phone) || contact.Phone.length !== 9))
+        {
+            alert("Niepoprawny format numeru telefonu");
+            return false;
+        }
+        var emailRegEx = /^\w+([-+.'][^\s]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+
+        if (!emailRegEx.test(contact.Email)) {
+            alert("Niepoprawny format email");
+            return false;
+        };
+
         $.ajax({
             type: "POST",
             url: url,
             data: JSON.stringify(contact),
             contentType: "application/json",
             success: function (result) {
-                alert("Kontakt " +result.contact.contact+ " wysłano poprawnie");
+                alert("Kontakt wysłano! Odezwiemy się do Ciebie wkrótce.");
             },
             error: function (result) {
                 console.warn(result);
