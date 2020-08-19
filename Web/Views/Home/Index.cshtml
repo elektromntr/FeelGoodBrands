@@ -15,8 +15,10 @@
                 <div class="row brand-intro-box">
                     <div class="col-md-6">
                         <div class="agent-avatar-box">
-                            <img src="data:@brand.Cover.FileMimeType;base64,@System.Convert.ToBase64String(brand.Cover.FileData)" 
-                                 alt="" class="agent-avatar img-fluid">
+                            <a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")">
+                                <img src="data:@brand.Cover.FileMimeType;base64,@System.Convert.ToBase64String(brand.Cover.FileData)"
+                                     alt="" class="agent-avatar img-fluid">
+                            </a>
                         </div>
                     </div>
                     <div class="col-md-5 section-md-t3">
@@ -24,7 +26,9 @@
                             <div class="agent-title">
                                 <div class="title-box-d">
                                     <h3 class="title-d">
-                                        @brand.Name
+                                        <a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")">
+                                            @brand.Name
+                                        </a>
                                     </h3>
                                 </div>
                             </div>
