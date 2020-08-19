@@ -12,9 +12,9 @@
                                 <div class="col-lg-8">
                                     <div class="intro-body">
                                         <p class="intro-title-top">
-                                            @if (brand.CreationDate > DateTime.Now.AddMonths(-1))
+                                            @if (brand.CreationDate > DateTime.Now.AddDays(-7))
                                             {
-                                                <span>New!</span>
+                                                <span>Nowość!</span>
                                             }
                                         </p>
                                         @*<h1 class="intro-title mb-4">

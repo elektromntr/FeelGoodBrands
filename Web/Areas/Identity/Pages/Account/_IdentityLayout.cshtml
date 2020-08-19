@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>materie*</title>
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <meta content="Materie" name="keywords">
+    <meta content="Materie" name="description">
+
+    <!-- Favicons -->
+    <link href="~/img/favicon.png" rel="icon">
+    <link href="~/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="~/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="~/css/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+      Theme Name: EstateAgency
+      Theme URL: https://bootstrapmade.com/real-estate-agency-bootstrap-template/
+      Author: BootstrapMade.com
+      License: https://bootstrapmade.com/license/
+    ======================================================= -->
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top">
+            <div class="container">
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarDefault"
+                        aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <a class="navbar-brand text-brand" asp-action="Index" asp-controller="Home">
+                    Panel administracyjny
+                </a>
+                <button type="button" class="btn btn-link nav-search navbar-toggle-box-collapse d-md-none" data-toggle="collapse"
+                        data-target="#navbarTogglerDemo01" aria-expanded="false">
+                    <span class="fa fa-search" aria-hidden="true"></span>
+                </button>
+                <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Index" asp-controller="Home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#footer">O nas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#footer">Kontakt</a>
+                        </li>
+                    </ul>
+
+                </div>
+                @*<partial name="_LoginPartial" />
+        <button type="button" class="btn btn-b-n navbar-toggle-box-collapse d-none d-md-block" data-toggle="collapse"
+                    data-target="#navbarTogglerDemo01" aria-expanded="false">
+                <span class="fa fa-search" aria-hidden="true"></span>
+            </button>*@
+            </div>
+        </nav>
+        <!--/ Nav End /-->
+    </header>
+    <div id="render-body" class="container section-t8">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+    @await Html.PartialAsync("_Footer")
+    <!-- JavaScript .Net Core Default Library -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- JavaScript Libraries -->
+    <script src="~/lib/jquery/jquery.min.js" defer></script>
+    <script src="~/lib/jquery/jquery-migrate.min.js" defer></script>
+    <script src="~/lib/popper/popper.min.js" defer></script>
+    <script src="~/lib/bootstrap/js/bootstrap.min.js" defer></script>
+    <script src="~/lib/easing/easing.min.js" defer></script>
+    <script src="~/lib/owlcarousel/owl.carousel.min.js" defer></script>
+    <script src="~/lib/scrollreveal/scrollreveal.min.js" defer></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- Template Main Javascript File -->
+    <script src="~/js/main.js" defer></script>
+
+    <!-- Render Javascript Files Section -->
+    @RenderSection("Scripts", required: false)
+    <!-- Render Javascript Files End of Section -->
+</body>
+</html>
