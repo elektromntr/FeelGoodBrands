@@ -17,12 +17,15 @@ namespace Logic.Services
     {
         private readonly IRepository<Brand> _brandRepository;
         private readonly IRepository<Attachment> _attachmentRepository;
+        private readonly IRepository<Media> _mediaRepository;
 
         public BrandService(IRepository<Brand> brandRepository,
-            IRepository<Attachment> attachmentRepository)
+            IRepository<Attachment> attachmentRepository,
+            IRepository<Media> mediaRepository)
         {
             _brandRepository = brandRepository;
             _attachmentRepository = attachmentRepository;
+            _mediaRepository = mediaRepository;
         }
 
         public async Task<Brand> Create(CreateBrand newBrand)
@@ -170,6 +173,22 @@ namespace Logic.Services
                 imagesUpdate = await SaveImages(model.Id, model.Name, model.ImagesUpdate);
             }
             return await GetByIdWithImages(model.Id);
+        }
+
+        public async Task DeleteBrand(Guid id)
+        {
+            try
+            {
+                _attachmentRepository.DeleteRange(_attachmentRepository.Get().Where(a => a.ReferenceId == id));
+                _mediaRepository.DeleteRange(_mediaRepository.Get().Where(m => m.BrandId == id));
+                await _brandRepository.Delete(id);
+                await _brandRepository.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         public async Task<List<Brand>> GetAll() => await 

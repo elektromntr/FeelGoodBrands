@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AdminController : Controller
     {
         private readonly IBrandService _brandService;
@@ -38,9 +38,9 @@ namespace Web.Controllers
             _mapper = mapper;
             _attachmentRepository = attachmentRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(_mapper.Map<List<BrandViewModel>>(await _brandService.GetAll()));
         }
 
         public IActionResult CreateBrand() => View();
@@ -109,6 +109,21 @@ namespace Web.Controllers
             if (photoId == String.Empty) throw new Exception("No photo Id");
             var photos = await _attachmentService.Delete(new Guid(photoId));
             return PartialView("~/Views/Admin/Partials/_BrandPhotos.cshtml", photos);
+        }
+
+        public async Task<IActionResult> DeleteBrand(Guid id)
+        {
+            try
+            {
+                await _brandService.DeleteBrand(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
         }
     }
 }
