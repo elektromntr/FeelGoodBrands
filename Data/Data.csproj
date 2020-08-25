@@ -15,6 +15,10 @@
     <Compile Remove="Configuration\Migrations\20200824192553_productAndLanguages.Designer.cs" />
     <Compile Remove="Configuration\Migrations\20200824192742_productsAndLanguages.cs" />
     <Compile Remove="Configuration\Migrations\20200824192742_productsAndLanguages.Designer.cs" />
+    <Compile Remove="Configuration\Migrations\20200824193715_productsAndLanguages.cs" />
+    <Compile Remove="Configuration\Migrations\20200824193715_productsAndLanguages.Designer.cs" />
+    <Compile Remove="Configuration\Migrations\20200825191529_description.cs" />
+    <Compile Remove="Configuration\Migrations\20200825191529_description.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

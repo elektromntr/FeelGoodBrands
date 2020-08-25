@@ -68,7 +68,7 @@ namespace Web.Controllers
             {
                 var brand = await _brandService.GetByIdWithImages(id);
                 var brandToEdit = _mapper.Map<EditBrand>(brand);
-                return View(brandToEdit);
+                return View("~/Views/Admin/Brand/EditBrand.cshtml", brandToEdit);
             }
             catch (Exception e)
             {
@@ -125,5 +125,35 @@ namespace Web.Controllers
             }
 
         }
+
+        [HttpGet]
+        public IActionResult CreateDescription(Guid guid)
+        {
+            ViewBag.BrandGuid = guid;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateDescription(BrandDescription description)
+        {
+            await _brandService.CreateDescription(description);
+            return RedirectToAction("EditBrand", new {id = description.BrandId});
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditBrandDescription(Guid guid)
+        {
+            var result = await _brandService.GetDescriptionById(guid);
+            return View("~/Views/Admin/Brand/EditBrandDescription.cshtml", result);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> EditBrandDescription(BrandDescription description)
+        {
+            _brandService.UpdateDescription(description);
+            return RedirectToAction("EditBrand", new {id = description.BrandId});
+        }
+
+        
     }
 }

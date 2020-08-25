@@ -18,14 +18,17 @@ namespace Logic.Services
         private readonly IRepository<Brand> _brandRepository;
         private readonly IRepository<Attachment> _attachmentRepository;
         private readonly IRepository<Media> _mediaRepository;
+        private readonly IRepository<BrandDescription> _brandDescriptionRepository;
 
         public BrandService(IRepository<Brand> brandRepository,
             IRepository<Attachment> attachmentRepository,
-            IRepository<Media> mediaRepository)
+            IRepository<Media> mediaRepository,
+            IRepository<BrandDescription> brandDescriptionRepository)
         {
             _brandRepository = brandRepository;
             _attachmentRepository = attachmentRepository;
             _mediaRepository = mediaRepository;
+            _brandDescriptionRepository = brandDescriptionRepository;
         }
 
         public async Task<Brand> Create(CreateBrand newBrand)
@@ -138,6 +141,7 @@ namespace Logic.Services
             .Where(i => i.Id == guid)
             .Include(b => b.Cover)
             .Include(b => b.Medias)
+            .Include(b => b.Descriptions)
             .FirstOrDefault();
             brand.Images = await _attachmentRepository.Get()
                 .Where(i => i.ReferenceId == brand.Id 
@@ -188,6 +192,24 @@ namespace Logic.Services
                 Console.WriteLine(e);
                 throw;
             }
+        }
+
+        public async Task CreateDescription(BrandDescription description)
+        {
+            description.CreationDate = DateTime.Now;
+            description.EditDate = DateTime.Now;
+            _brandDescriptionRepository.Add(description);
+            await _brandDescriptionRepository.SaveChangesAsync();
+        }
+
+        public async Task<BrandDescription> GetDescriptionById(Guid guid) =>
+            await _brandDescriptionRepository.GetById(guid);
+
+        public void UpdateDescription(BrandDescription description)
+        {
+            description.EditDate = DateTime.Now;
+            _brandDescriptionRepository.Update(description);
+            _brandDescriptionRepository.SaveChanges();
         }
 
         public async Task<List<Brand>> GetAll() => await 

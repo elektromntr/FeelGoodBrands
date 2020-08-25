@@ -6,12 +6,12 @@ namespace Data.Models
 {
     public class Product : BaseModel
     {
+        public Guid BrandId { get; set; }
         [ForeignKey("BrandId")]
         public Brand Brand { get; set; }
-        public Guid BrandId { get; set; }
+        public Guid ImageId { get; set; }
         [ForeignKey("ImageId")]
         public Attachment Image { get; set; }
-        public Guid ImageId { get; set; }
-        public ICollection<Description> Descriptions { get; set; }
+        public ICollection<ProductDescription> Descriptions { get; set; }
     }
 }

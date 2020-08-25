@@ -87,6 +87,34 @@ namespace Data.Configuration.Migrations
                     b.ToTable("Brands");
                 });
 
+            modelBuilder.Entity("Data.Models.BrandDescription", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BrandId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Language")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
+
+                    b.ToTable("BrandDescriptions");
+                });
+
             modelBuilder.Entity("Data.Models.Customer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -108,34 +136,6 @@ namespace Data.Configuration.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
-                });
-
-            modelBuilder.Entity("Data.Models.Description", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("EditDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Language")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("ReferenceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReferenceId");
-
-                    b.ToTable("Descriptions");
                 });
 
             modelBuilder.Entity("Data.Models.Media", b =>
@@ -191,6 +191,34 @@ namespace Data.Configuration.Migrations
                     b.HasIndex("ImageId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Data.Models.ProductDescription", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Language")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductDescriptions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -409,17 +437,11 @@ namespace Data.Configuration.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Data.Models.Description", b =>
+            modelBuilder.Entity("Data.Models.BrandDescription", b =>
                 {
                     b.HasOne("Data.Models.Brand", "Brand")
                         .WithMany("Descriptions")
-                        .HasForeignKey("ReferenceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.Product", "Product")
-                        .WithMany("Descriptions")
-                        .HasForeignKey("ReferenceId")
+                        .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -444,6 +466,15 @@ namespace Data.Configuration.Migrations
                     b.HasOne("Data.Models.Attachment", "Image")
                         .WithMany()
                         .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Data.Models.ProductDescription", b =>
+                {
+                    b.HasOne("Data.Models.Product", "Brand")
+                        .WithMany("Descriptions")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

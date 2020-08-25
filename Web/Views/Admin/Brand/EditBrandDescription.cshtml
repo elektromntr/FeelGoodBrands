@@ -1,16 +1,17 @@
-﻿@using Data.Enums
-@model Data.Models.BrandDescription
+﻿@model Data.Models.BrandDescription
 
 @{
-    ViewData["Title"] = "CreateDescription";
+    ViewData["Title"] = "EditBrandDescription";
     Layout = "~/Areas/Identity/Pages/Account/_IdentityLayout.cshtml";
 }
 
-<h4>Description</h4>
+<h1>EditBrandDescription</h1>
+
+<h4>BrandDescription</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateDescription">
+        <form asp-action="EditBrandDescription">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Language" class="control-label">Wybierz język</label>
@@ -27,13 +28,14 @@
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input asp-for="BrandId"
+                <input asp-for="BrandId" 
                        type="hidden"
-                       value="@ViewBag.BrandGuid"
-                       class="form-control" />
+                       value="@Model.BrandId"/>
             </div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CreationDate" />
             <div class="form-group">
-                <input type="submit" value="CreateDescription" class="btn btn-primary" />
+                <input type="submit" value="EditBrandDescription" class="btn btn-primary" />
             </div>
         </form>
     </div>
