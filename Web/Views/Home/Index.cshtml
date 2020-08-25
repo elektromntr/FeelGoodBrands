@@ -1,0 +1,62 @@
+﻿@model IList<Data.Models.Brand>
+@{
+    ViewData["Title"] = "Strona główna";
+    Layout = "_Layout";
+}
+<!--/ Carousel Star /-->
+
+@await Component.InvokeAsync("BrandsCarousel")
+
+<!--/ Carousel end /-->
+@foreach (var brand in Model)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row brand-intro-box">
+                    <div class="col-md-6">
+                        <div class="agent-avatar-box">
+                            <a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")">
+                                <img src="data:@brand.Cover.FileMimeType;base64,@System.Convert.ToBase64String(brand.Cover.FileData)"
+                                     alt="" class="agent-avatar img-fluid">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-5 section-md-t3">
+                        <div class="agent-info-box">
+                            <div class="agent-title">
+                                <div class="title-box-d">
+                                    <h3 class="title-d">
+                                        <a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")">
+                                            @brand.Name
+                                        </a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="agent-content">
+                                <p class="content-d color-text-a">
+                                    @if (brand.Description.Length > 500)
+                                    {
+                                        <span>@Html.Raw(brand.Description.Substring(0, 500))...</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@Html.Raw(brand.Description)</span>
+                                    }
+                                </p>
+                                <p class="intro-subtitle intro-price socials-footer">
+                                    <a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")"><span class="price-b">Zobacz</span></a>
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@await Html.PartialAsync("~/Views/Home/Partials/_Contact.cshtml");
+@section Scripts {
+    <script src="~/js/contact.js" defer></script>
+}

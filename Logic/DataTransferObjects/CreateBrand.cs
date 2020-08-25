@@ -8,7 +8,6 @@ namespace Logic.DataTransferObjects
     {
         [Required(ErrorMessage = "Brak nazwy")]
         public string Name { get; set; }
-        public string Description { get; set; }
         [Required(ErrorMessage = "Brak okładki")]
         public IFormFile Cover { get; set; }
     }

@@ -40,7 +40,6 @@ namespace Logic.Services
                 var brandToCreate = new Brand
                 {
                     CreationDate = DateTime.Now,
-                    Description = newBrand.Description,
                     EditDate = DateTime.Now,
                     Id = brandGuid,
                     Name = newBrand.Name

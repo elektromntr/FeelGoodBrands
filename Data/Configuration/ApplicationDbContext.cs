@@ -19,5 +19,7 @@ namespace Data.Configuration
 		public DbSet<Attachment> Attachments { get; set; }
 		public DbSet<Media> Medias { get; set; }
 		public DbSet<Customer> Customers { get; set; }
+		public DbSet<Description> Descriptions { get; set; }
+		public DbSet<Product> Products { get; set; }
 	}
 }

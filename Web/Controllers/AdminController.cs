@@ -43,14 +43,14 @@ namespace Web.Controllers
             return View(_mapper.Map<List<BrandViewModel>>(await _brandService.GetAll()));
         }
 
-        public IActionResult CreateBrand() => View();
+        public IActionResult CreateBrand() => View("~/Views/Admin/Brand/CreateBrand.cshtml");
 
         [HttpPost]
         public async Task<IActionResult> CreateBrand(CreateBrand model)
         {
             try
             {
-                if (!ModelState.IsValid) return View(model);
+                if (!ModelState.IsValid) return View("~/Views/Admin/Brand/CreateBrand.cshtml", model);
                 var newBrand = await _brandService.Create(model);
                 return RedirectToAction("EditBrand", new { id = newBrand.Id });
             }

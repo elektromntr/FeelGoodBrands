@@ -11,6 +11,10 @@
     <Compile Remove="Configuration\Migrations\20200621111726_mediasReference.Designer.cs" />
     <Compile Remove="Configuration\Migrations\20200621112056_mediasReference.cs" />
     <Compile Remove="Configuration\Migrations\20200621112056_mediasReference.Designer.cs" />
+    <Compile Remove="Configuration\Migrations\20200824192553_productAndLanguages.cs" />
+    <Compile Remove="Configuration\Migrations\20200824192553_productAndLanguages.Designer.cs" />
+    <Compile Remove="Configuration\Migrations\20200824192742_productsAndLanguages.cs" />
+    <Compile Remove="Configuration\Migrations\20200824192742_productsAndLanguages.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
