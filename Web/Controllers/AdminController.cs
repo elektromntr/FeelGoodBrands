@@ -173,7 +173,15 @@ namespace Web.Controllers
 
         [HttpGet]
         public async Task<IActionResult> EditProduct(Guid guid) =>
-            View("~/Views/Admin/Product/EditProduct.cshtml", 
+             View("~/Views/Admin/Product/EditProduct.cshtml", 
                 _mapper.Map<EditProduct>(await _productService.GetById(guid)));
+
+        [HttpPost]
+        public async Task<IActionResult> EditProduct(EditProduct editedProduct)
+        {
+            if (!ModelState.IsValid) return View("~/Views/Admin/Product/EditProduct.cshtml", editedProduct);
+            var resultProduct = await _productService.Update(editedProduct);
+            return View("~/Views/Admin/Brand/EditBrand.cshtml", _mapper.Map<EditBrand>(resultProduct));
+        }
     }
 }

@@ -25,6 +25,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
+                <img width="140px" src="data:@item.Image.FileMimeType;base64,@System.Convert.ToBase64String(item.Image.FileData)" alt="@item.Image.Description" class="img-fluid">
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreationDate)

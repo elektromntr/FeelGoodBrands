@@ -138,11 +138,12 @@ namespace Logic.Services
         public async Task<Brand> GetByIdWithImages(Guid guid)
         {
             var brand = _brandRepository.Get()
-            .Where(i => i.Id == guid)
-            .Include(b => b.Cover)
-            .Include(b => b.Medias)
-            .Include(b => b.Descriptions)
-            .FirstOrDefault();
+                .Where(i => i.Id == guid)
+                .Include(b => b.Cover)
+                .Include(b => b.Medias)
+                .Include(b => b.Descriptions)
+                .Include(b => b.Products).ThenInclude(p => p.Image)
+                .FirstOrDefault();
             brand.Images = await _attachmentRepository.Get()
                 .Where(i => i.ReferenceId == brand.Id 
                             && i.Type != AttachmentType.Cover).ToListAsync();
@@ -161,7 +162,6 @@ namespace Logic.Services
             var dbBrand = await GetById(model.Id);
             
             dbBrand.Name = model.Name;
-            dbBrand.Description = model.Description;
             dbBrand.EditDate = DateTime.Now;
             
             if (model.CoverUpdate != null)

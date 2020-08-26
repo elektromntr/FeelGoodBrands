@@ -14,12 +14,15 @@ namespace Logic.Services
     public class ProductService : IProductService
     {
         private readonly IRepository<Product> _productRepository;
+        private readonly IRepository<Attachment> _attachmentRepository;
         private readonly IAttachmentService _attachmentService;
 
         public ProductService(IRepository<Product> productRepository,
-            IAttachmentService attachmentService)
+            IRepository<Attachment> attachmentRepository,
+        IAttachmentService attachmentService)
         {
             _productRepository = productRepository;
+            _attachmentRepository = attachmentRepository;
             _attachmentService = attachmentService;
         }
 
@@ -44,11 +47,32 @@ namespace Logic.Services
             return await result;
         }
 
-        public async Task<Product> GetById(Guid guid) => 
-            _productRepository.Get()
+        public async Task<Product> GetById(Guid guid)
+        {
+            var result = _productRepository.Get()
                 .Where(p => p.Id == guid)
                 .Include(p => p.Image)
                 .Include(p => p.Descriptions)
                 .FirstOrDefault();
+            result.Image = _attachmentRepository.Get()
+                .FirstOrDefault(a => a.ReferenceId == result.Id);
+            return result;
+        }
+
+        public async Task<Product> Update(EditProduct model)
+        {
+            var dbProduct = await GetById(model.Id);
+
+            dbProduct.Name = model.Name;
+            dbProduct.EditDate = DateTime.Now;
+
+            if (model.ImageUpdate != null)
+                dbProduct.ImageId = await _attachmentService.SaveCover(model.Id, model.Name, model.ImageUpdate);
+            
+            _productRepository.Update(dbProduct);
+            _productRepository.SaveChanges();
+            
+            return await GetById(model.Id);
+        }
     }
 }

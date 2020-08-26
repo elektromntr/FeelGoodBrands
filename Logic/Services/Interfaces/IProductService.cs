@@ -9,5 +9,6 @@ namespace Logic.Services.Interfaces
     {
         Task<Product> Create(CreateProduct product);
         Task<Product> GetById(Guid guid);
+        Task<Product> Update(EditProduct model);
     }
 }

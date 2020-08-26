@@ -9,6 +9,11 @@
 
 <h4>Product</h4>
 <hr />
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <img src="data:@Model.Image.FileMimeType;base64,@System.Convert.ToBase64String(Model.Image.FileData)" alt="@Model.Name cover image" class="img-fluid">
+    </div>
+</div>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="EditProduct" asp-controller="Admin" method="post" role="form" enctype="multipart/form-data">
@@ -52,11 +57,6 @@
                 <input asp-for="CreationDate" class="form-control" />
                 <span asp-validation-for="CreationDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="EditDate" class="control-label"></label>
-                <input asp-for="EditDate" class="form-control" />
-                <span asp-validation-for="EditDate" class="text-danger"></span>
-            </div>
             <input type="hidden"
                    asp-for="Id"
                    id="productId" />
@@ -72,6 +72,6 @@
 </div>
 
 <div>
-    <a asp-action="EditBrand" asp-controller="Admin" asp-route-id="@ViewBag.BrandGuid">Back to Brand</a>
+    <a asp-action="EditBrand" asp-controller="Admin" asp-route-id="@Model.BrandId">Back to Brand</a>
 </div>
 
