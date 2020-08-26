@@ -20,6 +20,7 @@ namespace Web.Controllers
         private readonly IBrandService _brandService;
         private readonly IMediaService _mediaService;
         private readonly IAttachmentService _attachmentService;
+        private readonly IProductService _productService;
         private readonly IRepository<Media> _mediaRepository;
         private readonly IRepository<Attachment> _attachmentRepository;
         private readonly IMapper _mapper;
@@ -27,6 +28,7 @@ namespace Web.Controllers
         public AdminController(IBrandService brandService,
             IMediaService mediaService,
             IAttachmentService attachmentService,
+            IProductService productService,
             IRepository<Media> mediaRepository,
             IRepository<Attachment> attachmentRepository,
             IMapper mapper)
@@ -34,6 +36,7 @@ namespace Web.Controllers
             _brandService = brandService;
             _mediaService = mediaService;
             _attachmentService = attachmentService;
+            _productService = productService;
             _mediaRepository = mediaRepository;
             _mapper = mapper;
             _attachmentRepository = attachmentRepository;
@@ -79,10 +82,10 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditBrand(EditBrand editedBrand)
         {
-            if (!ModelState.IsValid) return View(editedBrand);
+            if (!ModelState.IsValid) return View("~/Views/Admin/Brand/EditBrand.cshtml", editedBrand);
             var resultBrand = await _brandService.Update(editedBrand);
             var mappedBrand = _mapper.Map<EditBrand>(resultBrand);
-            return View(mappedBrand);
+            return View("~/Views/Admin/Brand/EditBrand.cshtml", mappedBrand);
         }
 
         [HttpPost]
@@ -130,7 +133,7 @@ namespace Web.Controllers
         public IActionResult CreateDescription(Guid guid)
         {
             ViewBag.BrandGuid = guid;
-            return View();
+            return View("~/Views/Admin/Brand/CreateDescription.cshtml");
         }
 
         [HttpPost]
@@ -154,6 +157,23 @@ namespace Web.Controllers
             return RedirectToAction("EditBrand", new {id = description.BrandId});
         }
 
-        
+        [HttpGet]
+        public async Task<IActionResult> CreateProduct(Guid brandId)
+        {
+            ViewBag.BrandGuid = brandId;
+            return View("~/Views/Admin/Product/CreateProduct.cshtml");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct(CreateProduct product)
+        {
+            var result = await _productService.Create(product);
+            return RedirectToAction("EditProduct", new { guid = result.Id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditProduct(Guid guid) =>
+            View("~/Views/Admin/Product/EditProduct.cshtml", 
+                _mapper.Map<EditProduct>(await _productService.GetById(guid)));
     }
 }

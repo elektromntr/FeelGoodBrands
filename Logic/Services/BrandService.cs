@@ -214,6 +214,7 @@ namespace Logic.Services
 
         public async Task<List<Brand>> GetAll() => await 
             _brandRepository.Get()
+                .Include(b => b.Descriptions)
                 .Include(b => b.Images)
                 .Include(b => b.Cover)
                 .Where(b => b.CoverId != null 

@@ -8,10 +8,11 @@ namespace Logic.DataTransferObjects
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public List<BrandDescription> Descriptions { get; set; }
         public Attachment Cover { get; set; }
         public ICollection<Attachment> Images { get; set; }
         public ICollection<Media> Medias { get; set; }
         public DateTime CreationDate { get; set; }
+        public DateTime EditDate { get; set; }
     }
 }

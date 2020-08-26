@@ -5,16 +5,21 @@
     Layout = "~/Areas/Identity/Pages/Account/_IdentityLayout.cshtml";
 }
 
-<h1>EditBrand</h1>
+<h1>@Model.Name</h1>
 
 <h4>EditBrand</h4>
 <hr />
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <img src="data:@Model.Cover.FileMimeType;base64,@System.Convert.ToBase64String(Model.Cover.FileData)" alt="@Model.Name cover image" class="img-fluid">
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="EditBrand">
+        <form asp-action="EditBrand" asp-controller="Admin" method="post" role="form" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
@@ -24,10 +29,10 @@
                     foreach (var item in @Model.Descriptions)
                     {
                         <div class="form-group">
-                            <label class="control-label">Opis: @item.Language.ToString()</label>
+                            <label>Opis: @item.Language.ToString()</label>
                             <p>@item.Text</p>
                             <small>
-                                <a asp-controller="Admin" asp-route-guid="@item.Id" asp-action="EditBrandDescription">Edytuj opis</a> | 
+                                <a asp-controller="Admin" asp-route-guid="@item.Id" asp-action="EditBrandDescription">Edytuj opis</a> |
                                 Utworzono: @item.CreationDate | Edytowano: @item.EditDate
                             </small>
                         </div>
@@ -35,22 +40,73 @@
                 }
             }
             <div class="form-group">
-                <a asp-controller="Admin" 
-                   asp-action="CreateDescription" 
+                <a asp-controller="Admin"
+                   asp-action="CreateDescription"
                    asp-route-guid="@Model.Id"
                    class="btn btn-success">Dodaj opis</a>
             </div>
             <div class="form-group">
-                <span>Utowrzono: @Model.CreationDate | Edytowano: @Model.EditDate</span>
+                <label>Zmień zdjęcie główne</label>
+                <input asp-for="CoverUpdate"
+                       class="form-control"
+                       type="file" />
             </div>
+            @*partial z linkami*@
+            @await Html.PartialAsync("~/Views/Admin/Partials/_BrandLinks.cshtml", Model.Medias.AsEnumerable())
+            <div class="row">
+                <div class="col-md-2 mb-3">
+                    <div class="form-group">
+                        <label>Wybierz rodzaj</label>
+                        <select asp-items="Html.GetEnumSelectList<Data.Enums.MediaType>()"
+                                id="mediatype"
+                                class="form-control form-control-lg form-control-a"></select>
+                    </div>
+                </div>
+                <div class="col-md-8 mb-3 form-group">
+                    <label>Dodaj link</label>
+                    <input type="text"
+                           class="form-control form-control-lg form-control-a"
+                           placeholder="Podaj link"
+                           id="mediaurl">
+                </div>
+                <div class="col-md-2 mb-3 form-group">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-success form-control"
+                            role="button"
+                            type="button" onclick="brand.addBrandMedia('@Url.Action("AddBrandLink", "Admin")')">
+                        Zapisz link
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <small>Utworzono: @Model.CreationDate | Edytowano: @Model.EditDate</small>
+            </div>
+            <input type="hidden"
+                   asp-for="Id"
+                   id="brandId"/>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+<div class="row">
+    <div class="form-group col-md-12">
+        <a asp-action="CreateProduct" 
+           asp-controller="Admin" 
+           asp-route-brandId="@Model.Id"
+           class="btn btn-success">Utwórz nowy produkt</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @await Html.PartialAsync("~/Views/Admin/Product/Partials/_EditBrandProducts.cshtml", Model.Products.AsEnumerable())
+    </div>
+</div>
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
+@section Scripts {
+    <script src="~/js/brand.js" defer></script>
+}

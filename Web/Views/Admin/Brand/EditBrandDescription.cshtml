@@ -10,7 +10,7 @@
 <h4>BrandDescription</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="EditBrandDescription">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -21,10 +21,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Text" class="control-label"></label>
-                <input asp-for="Text"
-                       type="text"
-                       placeholder="Dodaj opis"
-                       class="form-control" />
+                <textarea asp-for="Text"
+                          type="text"
+                          placeholder="Dodaj opis"
+                          class="form-control"
+                          rows="10"></textarea>
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -35,13 +36,13 @@
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="CreationDate" />
             <div class="form-group">
-                <input type="submit" value="EditBrandDescription" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to Admin</a>
 </div>
 

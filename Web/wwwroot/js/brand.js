@@ -20,7 +20,7 @@
                     linkId: e.currentTarget.attributes['id'].value
                 },
                 success: function(result) {
-                    $('section .brand-links').html(result);
+                    $('#brand-links').html(result);
                     brand.refreshBrandPartial();
                 },
                 error: function(result) {
@@ -68,7 +68,7 @@
                 brandId: brandId
             },
             success: function (result) {
-                $('section .brand-links').html(result);
+                $('#brand-links').html(result);
                 brand.refreshBrandPartial();
             },
             error: function (result) {

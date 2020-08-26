@@ -6,6 +6,7 @@ namespace Data.Models
 {
     public class Product : BaseModel
     {
+        public string Name { get; set; }
         public Guid BrandId { get; set; }
         [ForeignKey("BrandId")]
         public Brand Brand { get; set; }

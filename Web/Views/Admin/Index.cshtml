@@ -8,19 +8,26 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-controller="Admin" asp-action="CreateBrand">Utwórz nowy brand</a>
+    <a asp-controller="Admin" 
+       asp-action="CreateBrand"
+       class="btn btn-success">Utwórz nowy brand</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Brand name
             </th>
             
             <th>
                 @Html.DisplayNameFor(model => model.CreationDate)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.EditDate)
+            </th>
+            <th>
+                Actions
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -32,6 +39,16 @@
             
             <td>
                 @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @if (@item.EditDate == default(DateTime))
+                {
+                    <span>Nie edytowano</span>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.EditDate)
+                }
             </td>
             <td>
                 @Html.ActionLink("Edit", "EditBrand", new { id = item.Id }) |

@@ -1,5 +1,4 @@
-﻿@using Data.Enums
-@model Data.Models.BrandDescription
+﻿@model Data.Models.BrandDescription
 
 @{
     ViewData["Title"] = "CreateDescription";
@@ -9,7 +8,7 @@
 <h4>Description</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="CreateDescription">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -20,10 +19,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Text" class="control-label"></label>
-                <input asp-for="Text"
+                <textarea asp-for="Text"
                        type="text"
                        placeholder="Dodaj opis"
-                       class="form-control" />
+                       class="form-control"
+                       rows="10"></textarea>
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -33,7 +33,7 @@
                        class="form-control" />
             </div>
             <div class="form-group">
-                <input type="submit" value="CreateDescription" class="btn btn-primary" />
+                <input type="submit" value="Dodaj opis" class="btn btn-primary" />
             </div>
         </form>
     </div>

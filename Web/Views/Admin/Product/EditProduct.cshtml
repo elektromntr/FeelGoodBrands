@@ -1,0 +1,77 @@
+﻿@model Logic.DataTransferObjects.EditProduct
+
+@{
+    ViewData["Title"] = "EditProduct";
+    Layout = "~/Areas/Identity/Pages/Account/_IdentityLayout.cshtml";
+}
+
+<h1>EditProduct</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditProduct" asp-controller="Admin" method="post" role="form" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            @{
+                if (Model.Descriptions.Any())
+                {
+                    foreach (var item in @Model.Descriptions)
+                    {
+                        <div class="form-group">
+                            <label>Opis: @item.Language.ToString()</label>
+                            <p>@item.Text</p>
+                            <small>
+                                <a asp-controller="Admin" asp-route-guid="@item.Id" asp-action="EditProductDescription">Edytuj opis</a> |
+                                Utworzono: @item.CreationDate | Edytowano: @item.EditDate
+                            </small>
+                        </div>
+                    }
+                }
+            }
+            <div class="form-group">
+                <a asp-controller="Admin"
+                   asp-action="CreateProductDescription"
+                   asp-route-guid="@Model.Id"
+                   class="btn btn-success">Dodaj opis</a>
+            </div>
+            <div class="form-group">
+                <label>Zmień zdjęcie główne</label>
+                <input asp-for="ImageUpdate"
+                       class="form-control"
+                       type="file" />
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="CreationDate" class="control-label"></label>
+                <input asp-for="CreationDate" class="form-control" />
+                <span asp-validation-for="CreationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EditDate" class="control-label"></label>
+                <input asp-for="EditDate" class="form-control" />
+                <span asp-validation-for="EditDate" class="text-danger"></span>
+            </div>
+            <input type="hidden"
+                   asp-for="Id"
+                   id="productId" />
+            <input type="hidden"
+                   asp-for="BrandId"
+                   value="@Model.BrandId"
+                   id="brandId" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="EditBrand" asp-controller="Admin" asp-route-id="@ViewBag.BrandGuid">Back to Brand</a>
+</div>
+

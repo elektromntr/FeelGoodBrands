@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "@Model.Name";
     Layout = "_Layout";
+    var Language = Data.Enums.Language.Polish;
 }
 
 <section class="section-cover section-t8">
@@ -49,7 +50,9 @@
                         </h3>
                     </div>*@
                     <div class="color-text-a">
-                        @Html.Raw(@Model.Description)
+                        @Html.Raw(@Model.Descriptions
+                            .FirstOrDefault(d => d.Language == Language)?
+                            .Text)
                     </div>
                     <div class="section-t3">
                         <ul class="list-unstyled">

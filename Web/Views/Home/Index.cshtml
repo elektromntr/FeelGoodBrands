@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Strona główna";
     Layout = "_Layout";
+    var Language = Data.Enums.Language.Polish;
 }
 <!--/ Carousel Star /-->
 
@@ -35,13 +36,22 @@
                             </div>
                             <div class="agent-content">
                                 <p class="content-d color-text-a">
-                                    @if (brand.Description.Length > 500)
+                                    @if (brand.Descriptions.Any(d => d.Language == Language))
                                     {
-                                        <span>@Html.Raw(brand.Description.Substring(0, 500))...</span>
+                                        if (brand.Descriptions
+                                            .FirstOrDefault(d => d.Language == Language)?
+                                            .Text.Length > 500)
+                                        {
+                                            <span>
+                                                @Html.Raw(brand.Descriptions
+                                                         .FirstOrDefault(d => d.Language == Language)?
+                                                         .Text.Substring(0, 500))...
+                                            </span>
+                                        }
                                     }
                                     else
                                     {
-                                        <span>@Html.Raw(brand.Description)</span>
+                                        <span>Brak opisu w wybranym języku</span>
                                     }
                                 </p>
                                 <p class="intro-subtitle intro-price socials-footer">

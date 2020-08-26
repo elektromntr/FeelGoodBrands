@@ -1,0 +1,37 @@
+﻿@model Logic.DataTransferObjects.CreateProduct
+
+@{
+    ViewData["Title"] = "CreateProduct";
+    Layout = "~/Areas/Identity/Pages/Account/_IdentityLayout.cshtml";
+}
+
+<h1>CreateProduct</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateProduct" asp-controller="Admin" method="post" role="form" enctype="multipart/form-data">
+            <input type="hidden" 
+                   asp-for="BrandId"
+                   value="@ViewBag.BrandGuid"/>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" class="form-control" type="file" />
+                <span asp-validation-for="Image"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="EditBrand" asp-controller="Admin" asp-route-id="@ViewBag.BrandGuid">Back to Brand</a>
+</div>
+
