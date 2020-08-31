@@ -96,5 +96,12 @@ namespace Logic.Services
             _productDescriptionRepository.Update(description);
             _productDescriptionRepository.SaveChanges();
         }
+
+        public async Task<Product> GetByName(string name)
+        {
+            var guid = _productRepository.Get().FirstOrDefault(b => b.Name.Replace(" ", "") == name).Id;
+            var product = await GetById(guid);
+            return product;
+        }
     }
 }
