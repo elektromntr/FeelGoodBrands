@@ -14,16 +14,19 @@ namespace Logic.Services
     public class ProductService : IProductService
     {
         private readonly IRepository<Product> _productRepository;
+        private readonly IRepository<Brand> _brandRepository;
         private readonly IRepository<ProductDescription> _productDescriptionRepository;
         private readonly IRepository<Attachment> _attachmentRepository;
         private readonly IAttachmentService _attachmentService;
 
         public ProductService(IRepository<Product> productRepository,
+            IRepository<Brand> brandRepository,
             IRepository<ProductDescription> productDescriptionRepository,
             IRepository<Attachment> attachmentRepository,
             IAttachmentService attachmentService)
         {
             _productRepository = productRepository;
+            _brandRepository = brandRepository;
             _productDescriptionRepository = productDescriptionRepository;
             _attachmentRepository = attachmentRepository;
             _attachmentService = attachmentService;
@@ -53,13 +56,15 @@ namespace Logic.Services
         public async Task<Product> GetById(Guid guid)
         {
             var result = _productRepository.Get()
-                .Where(p => p.Id == guid)
-                .Include(p => p.Image)
-                .FirstOrDefault();
+                .AsNoTracking()
+                .FirstOrDefault(p => p.Id == guid);
             result.Image = _attachmentRepository.Get()
+                .AsNoTracking()
                 .FirstOrDefault(a => a.ReferenceId == result.Id);
             result.Descriptions = _productDescriptionRepository.Get()
+                .AsNoTracking()
                 .Where(d => d.ProductId == result.Id).ToList();
+            result.Brand = await _brandRepository.GetById(result.BrandId);
             return result;
         }
 
@@ -99,7 +104,8 @@ namespace Logic.Services
 
         public async Task<Product> GetByName(string name)
         {
-            var guid = _productRepository.Get().FirstOrDefault(b => b.Name.Replace(" ", "") == name).Id;
+            var guid = _productRepository.Get()
+                .FirstOrDefault(b => b.Name.Replace(" ", "") == name).Id;
             var product = await GetById(guid);
             return product;
         }

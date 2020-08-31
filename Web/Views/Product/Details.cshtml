@@ -1,6 +1,6 @@
 ﻿@using Data.Enums
 @using Microsoft.AspNetCore.Http
-@model Logic.DataTransferObjects.BrandViewModel
+@model Logic.DataTransferObjects.ProductViewModel
 
 @{
     ViewBag.Title = "@Model.Name";
@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-sm-12  mt-4">
                 <div class="about-img-box">
-                    <img src="data:@Model.Cover.FileMimeType;base64,@System.Convert.ToBase64String(Model.Cover.FileData)"
+                    <img src="data:@Model.Image.FileMimeType;base64,@System.Convert.ToBase64String(Model.Image.FileData)"
                          alt="@Model.Name cover image"
                          class="img-fluid">
                 </div>
@@ -23,7 +23,6 @@
                         <span></span>
                         <br>
                     </h3>
-                    <p>Z nami od @Model.CreationDate.Year</p>
                 </div>
             </div>
         </div>
@@ -55,8 +54,8 @@
                         @if (@Model.Descriptions.Any(d => d.Language == language))
                         {
                             @Html.Raw(@Model.Descriptions
-                                 .FirstOrDefault(d => d.Language == language)?
-                                 .Text)
+                                .FirstOrDefault(d => d.Language == language)?
+                                .Text)
                         }
                         else
                         {
@@ -65,44 +64,33 @@
                                 .Text)
                         }
                     </div>
-                    <div class="section-t3">
-                        <ul class="list-unstyled">
-                            @foreach (var media in Model.Medias)
-                            {
-                                <li class="item-list-a">
-                                    <a href='https://@media.Link' target="_blank"><i class="fa fa-@media.Type.ToString()"></i> @media.Link</a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-@if (Model.Products != null && Model.Products.Count > 0)
-{
-    @await Html.PartialAsync("~/Views/Admin/Partials/_BrandProducts.cshtml", Model.Products.ToList());
-}
-@if (User.Identity.IsAuthenticated)
-{
-    <section class="admin mb-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 col-lg-4">
-                    <a asp-controller="Admin" asp-action="EditBrand" asp-route-id="@Model.Id">
-                        <button class="btn btn-a"
-                                role="button"
-                                type="button">
-                            Edytuj brand
-                        </button>
-                    </a>
+<section class="intro-single">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-8">
+                <div class="title-single-box">
+                    <h1 class="title-single">@*Tutaj będzie partial z logo svg brandu*@</h1>
                 </div>
             </div>
+            <div class="col-md-12 col-lg-4">
+                <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a asp-controller="Brand"
+                               asp-action="Details"
+                               asp-route-name="@Model.BrandName">@Model.BrandName</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            @Model.Name
+                        </li>
+                    </ol>
+                </nav>
+            </div>
         </div>
-    </section>
-}
-
-@section Scripts {
-    <script src="~/js/brand.js" defer></script>
-}
+    </div>
+</section>

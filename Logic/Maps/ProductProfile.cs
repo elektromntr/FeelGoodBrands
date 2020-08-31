@@ -12,6 +12,8 @@ namespace Logic.Maps
         public ProductProfile()
         {
             CreateMap<Product, EditProduct>();
+            CreateMap<Product, ProductViewModel>()
+                .ForMember(d => d.BrandName, o => o.MapFrom(s => s.Brand.Name));
         }
     }
 }

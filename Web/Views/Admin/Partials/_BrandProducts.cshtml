@@ -4,6 +4,7 @@
 
 @{
     var language = Language.English;
+    
 }
 
 <section class="brand-products grid">
@@ -11,7 +12,6 @@
         <div class="row">
             @foreach (var product in Model)
             {
-            
                 <div class="col-md-4 section-t3">
                     <div class="card-box-d">
                         
@@ -23,7 +23,7 @@
                                 <div class="card-title-d align-self-center">
                                     <a asp-action="Details"
                                        asp-controller="Product"
-                                       asp-route-name="@product.Name">
+                                       asp-route-name="@product.Name.Replace(" ", "")">
                                         <h3 class="title-d">
                                             @product.Name
                                         </h3>

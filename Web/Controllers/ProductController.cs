@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Data.Enums;
+using Data.Models;
 using Logic.DataTransferObjects;
 using Logic.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -33,8 +34,8 @@ namespace Web.Controllers
         [Route("Product/Details/{name}")]
         public async Task<IActionResult> Details(string name)
         {
-            var brand = await _productService.GetByName(name);
-            return View(_mapper.Map<BrandViewModel>(brand));
+            var product = _mapper.Map<ProductViewModel>((await _productService.GetByName(name)));
+            return View(product);
         }
     }
 }
