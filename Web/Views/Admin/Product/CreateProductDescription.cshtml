@@ -1,16 +1,15 @@
-﻿@model Data.Models.BrandDescription
+﻿@model Data.Models.ProductDescription
 
 @{
-    ViewData["Title"] = "EditBrandDescription";
+    ViewData["Title"] = "CreateProductDescription";
     Layout = "~/Areas/Identity/Pages/Account/_IdentityLayout.cshtml";
 }
 
-<h1>EditBrandDescription</h1>
-
+<h4>Description</h4>
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="EditBrandDescription">
+        <form asp-action="CreateProductDescription">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Language" class="control-label">Wybierz język</label>
@@ -21,27 +20,26 @@
             <div class="form-group">
                 <label asp-for="Text" class="control-label"></label>
                 <textarea asp-for="Text"
-                          type="text"
-                          placeholder="Dodaj opis"
-                          class="form-control"
-                          rows="10"></textarea>
+                       type="text"
+                       placeholder="Dodaj opis"
+                       class="form-control"
+                       rows="10"></textarea>
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input asp-for="BrandId" 
+                <input asp-for="ProductId"
                        type="hidden"
-                       value="@Model.BrandId"/>
+                       value="@ViewBag.ProductGuid"
+                       class="form-control" />
             </div>
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="CreationDate" />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Dodaj opis" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to Admin</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 

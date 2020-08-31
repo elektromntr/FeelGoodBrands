@@ -1,9 +1,11 @@
-﻿@model Logic.DataTransferObjects.BrandViewModel
+﻿@using Data.Enums
+@using Microsoft.AspNetCore.Http
+@model Logic.DataTransferObjects.BrandViewModel
 
 @{
     ViewBag.Title = "@Model.Name";
     Layout = "_Layout";
-    var Language = Data.Enums.Language.Polish;
+    var language = Language.English;
 }
 
 <section class="section-cover section-t8">
@@ -50,9 +52,18 @@
                         </h3>
                     </div>*@
                     <div class="color-text-a">
-                        @Html.Raw(@Model.Descriptions
-                            .FirstOrDefault(d => d.Language == Language)?
-                            .Text)
+                        @if (@Model.Descriptions.Any(d => d.Language == language))
+                        {
+                            @Html.Raw(@Model.Descriptions
+                                 .FirstOrDefault(d => d.Language == language)?
+                                 .Text)
+                        }
+                        else
+                        {
+                            @Html.Raw(@Model.Descriptions
+                                .FirstOrDefault(d => d.Language == Data.Enums.Language.English)?
+                                .Text)
+                        }
                     </div>
                     <div class="section-t3">
                         <ul class="list-unstyled">
@@ -69,9 +80,9 @@
         </div>
     </div>
 </section>
-@if (Model.Images != null && Model.Images.Count > 0)
+@if (Model.Products != null && Model.Products.Count > 0)
 {
-    @await Html.PartialAsync("~/Views/Admin/Partials/_BrandPhotos.cshtml", Model.Images.ToList());
+    @await Html.PartialAsync("~/Views/Admin/Partials/_BrandProducts.cshtml", Model.Products.ToList());
 }
 @if (User.Identity.IsAuthenticated)
 {

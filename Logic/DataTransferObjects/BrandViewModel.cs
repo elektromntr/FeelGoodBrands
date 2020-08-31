@@ -10,7 +10,7 @@ namespace Logic.DataTransferObjects
         public string Name { get; set; }
         public List<BrandDescription> Descriptions { get; set; }
         public Attachment Cover { get; set; }
-        public ICollection<Attachment> Images { get; set; }
+        public ICollection<Product> Products { get; set; }
         public ICollection<Media> Medias { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime EditDate { get; set; }

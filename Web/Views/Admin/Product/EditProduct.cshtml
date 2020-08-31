@@ -7,7 +7,7 @@
 
 <h1>EditProduct</h1>
 
-<h4>Product</h4>
+<h4>@Model.Name</h4>
 <hr />
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
@@ -15,7 +15,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="EditProduct" asp-controller="Admin" method="post" role="form" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -52,11 +52,7 @@
                        type="file" />
             </div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="CreationDate" class="control-label"></label>
-                <input asp-for="CreationDate" class="form-control" />
-                <span asp-validation-for="CreationDate" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="CreationDate" />
             <input type="hidden"
                    asp-for="Id"
                    id="productId" />

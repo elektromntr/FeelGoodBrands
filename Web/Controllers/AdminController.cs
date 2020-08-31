@@ -135,7 +135,21 @@ namespace Web.Controllers
             ViewBag.BrandGuid = guid;
             return View("~/Views/Admin/Brand/CreateDescription.cshtml");
         }
+        
+        [HttpGet]
+        public IActionResult CreateProductDescription(Guid guid)
+        {
+            ViewBag.ProductGuid = guid;
+            return View("~/Views/Admin/Product/CreateProductDescription.cshtml");
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateProductDescription(ProductDescription description)
+        {
+            await _productService.CreateDescription(description);
+            return RedirectToAction("EditProduct", new {guid = description.ProductId});
+        }
+        
         [HttpPost]
         public async Task<IActionResult> CreateDescription(BrandDescription description)
         {
@@ -149,12 +163,26 @@ namespace Web.Controllers
             var result = await _brandService.GetDescriptionById(guid);
             return View("~/Views/Admin/Brand/EditBrandDescription.cshtml", result);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> EditProductDescription(Guid guid)
+        {
+            var result = await _productService.GetDescriptionById(guid);
+            return View("~/Views/Admin/Product/EditProductDescription.cshtml", result);
+        }
         
         [HttpPost]
         public async Task<IActionResult> EditBrandDescription(BrandDescription description)
         {
             _brandService.UpdateDescription(description);
             return RedirectToAction("EditBrand", new {id = description.BrandId});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProductDescription(ProductDescription description)
+        {
+            _productService.UpdateDescription(description);
+            return RedirectToAction("EditProduct", new {guid = description.ProductId});
         }
 
         [HttpGet]
@@ -181,7 +209,7 @@ namespace Web.Controllers
         {
             if (!ModelState.IsValid) return View("~/Views/Admin/Product/EditProduct.cshtml", editedProduct);
             var resultProduct = await _productService.Update(editedProduct);
-            return View("~/Views/Admin/Brand/EditBrand.cshtml", _mapper.Map<EditBrand>(resultProduct));
+            return RedirectToAction("EditBrand", new { id = resultProduct.BrandId });
         }
     }
 }

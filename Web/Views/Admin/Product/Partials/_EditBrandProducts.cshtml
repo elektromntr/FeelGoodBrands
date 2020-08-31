@@ -34,8 +34,8 @@
                 @Html.DisplayFor(modelItem => item.EditDate)
             </td>
             <td>
-                <a asp-action="EditProduct" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="EditProduct" asp-route-guid="@item.Id">Edit</a> |
+                <a asp-controller="Product" asp-action="Details" asp-route-guid="@item.Id">Details</a> |
                 <a asp-action="DeleteProduct" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>

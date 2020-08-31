@@ -14,14 +14,17 @@ namespace Logic.Services
     public class ProductService : IProductService
     {
         private readonly IRepository<Product> _productRepository;
+        private readonly IRepository<ProductDescription> _productDescriptionRepository;
         private readonly IRepository<Attachment> _attachmentRepository;
         private readonly IAttachmentService _attachmentService;
 
         public ProductService(IRepository<Product> productRepository,
+            IRepository<ProductDescription> productDescriptionRepository,
             IRepository<Attachment> attachmentRepository,
-        IAttachmentService attachmentService)
+            IAttachmentService attachmentService)
         {
             _productRepository = productRepository;
+            _productDescriptionRepository = productDescriptionRepository;
             _attachmentRepository = attachmentRepository;
             _attachmentService = attachmentService;
         }
@@ -52,10 +55,11 @@ namespace Logic.Services
             var result = _productRepository.Get()
                 .Where(p => p.Id == guid)
                 .Include(p => p.Image)
-                .Include(p => p.Descriptions)
                 .FirstOrDefault();
             result.Image = _attachmentRepository.Get()
                 .FirstOrDefault(a => a.ReferenceId == result.Id);
+            result.Descriptions = _productDescriptionRepository.Get()
+                .Where(d => d.ProductId == result.Id).ToList();
             return result;
         }
 
@@ -73,6 +77,24 @@ namespace Logic.Services
             _productRepository.SaveChanges();
             
             return await GetById(model.Id);
+        }
+
+        public async Task CreateDescription(ProductDescription description)
+        {
+            description.CreationDate = DateTime.Now;
+            description.EditDate = DateTime.Now;
+            await _productDescriptionRepository.Add(description);
+            await _productDescriptionRepository.SaveChangesAsync();
+        }
+
+        public async Task<ProductDescription> GetDescriptionById(Guid guid) =>
+            await _productDescriptionRepository.GetById(guid);
+
+        public void UpdateDescription(ProductDescription description)
+        {
+            description.EditDate = DateTime.Now;
+            _productDescriptionRepository.Update(description);
+            _productDescriptionRepository.SaveChanges();
         }
     }
 }

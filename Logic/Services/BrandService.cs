@@ -142,16 +142,20 @@ namespace Logic.Services
                 .Include(b => b.Cover)
                 .Include(b => b.Medias)
                 .Include(b => b.Descriptions)
-                .Include(b => b.Products).ThenInclude(p => p.Image)
+                .Include(p => p.Products)
+                    .ThenInclude(p => p.Descriptions)
+                .Include(b => b.Products)
+                    .ThenInclude(p => p.Image)
                 .FirstOrDefault();
-            brand.Images = await _attachmentRepository.Get()
-                .Where(i => i.ReferenceId == brand.Id 
-                            && i.Type != AttachmentType.Cover).ToListAsync();
+            //brand.Images = await _attachmentRepository.Get()
+            //    .Where(i => i.ReferenceId == brand.Id 
+            //                && i.Type != AttachmentType.Cover).ToListAsync();
             return brand;
         }
 
         public async Task<Brand> GetByName(string name)
         {
+            // ReSharper disable once PossibleNullReferenceException
             var guid = _brandRepository.Get().FirstOrDefault(b => b.Name.Replace(" ", "") == name).Id;
             var brand = await GetByIdWithImages(guid);
             return brand;
