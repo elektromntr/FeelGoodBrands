@@ -4,17 +4,16 @@
 
 @{
     var language = Language.English;
-    
-}
 
+}
+<link href="~/css/masonry.css" rel="stylesheet" />
 <section class="brand-products grid">
     <div class="container">
         <div class="row">
-            @foreach (var product in Model)
-            {
-                <div class="col-md-4 section-t3">
-                    <div class="card-box-d">
-                        
+            <div class="masonry">
+                @foreach (var product in Model)
+                {
+                    <div class="card-box-d brick">
                         <div class="card-img-d">
                             <img src="data:@product.Image.FileMimeType;base64,@System.Convert.ToBase64String(product.Image.FileData)" alt="@product.Image.Description" class="img-d img-fluid">
                         </div>
@@ -30,20 +29,18 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="card-body-d">
-                                <p class="content-d color-text-a">
+                            @*<div class="card-body-d">
+                                <p class="content-d color-text-b">
                                     @Html.Raw(product.Descriptions
                                         .FirstOrDefault(d => d.Language == language)?
-                                        .Text.Substring(0, 100))<span>...</span>
+                                        .Text.Substring(0, 100))
                                 </p>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
-                </div>
-            } @*Foreach end*@
+                }
+                @*Foreach end*@
+            </div>
         </div>
     </div>
 </section>
-<script>
-    console.log("brandPhotos");
-</script>

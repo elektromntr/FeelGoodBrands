@@ -35,11 +35,11 @@
         <div class="col-md-12 section-t4">
             <div class="row">
                 @*<div class="col-md-6 col-lg-6">
-                    <img src="data:@Model.Images.FirstOrDefault(i => i.Type == Data.Enums.AttachmentType.Main).FileMimeType;base64,@System.Convert.ToBase64String(Model.Images.FirstOrDefault(i => i.Type == Data.Enums.AttachmentType.Main).FileData)"
-                         alt="@Model.Name main image"
-                         class="img-fluid mb-3"
-                         style="object-fit: cover;">
-                </div>*@
+                        <img src="data:@Model.Images.FirstOrDefault(i => i.Type == Data.Enums.AttachmentType.Main).FileMimeType;base64,@System.Convert.ToBase64String(Model.Images.FirstOrDefault(i => i.Type == Data.Enums.AttachmentType.Main).FileData)"
+                             alt="@Model.Name main image"
+                             class="img-fluid mb-3"
+                             style="object-fit: cover;">
+                    </div>*@
                 @*<div class="col-lg-2  d-none d-lg-block">
                         <div class="title-vertical d-flex justify-content-start">
                             <span>Exclusive content</span>
@@ -47,10 +47,10 @@
                     </div>*@
                 <div class="col-md-12 col-lg-12">
                     @*<div class="title-box-d">
-                        <h3 class="title-d">
-                            Szczegóły
-                        </h3>
-                    </div>*@
+                            <h3 class="title-d">
+                                Szczegóły
+                            </h3>
+                        </div>*@
                     <div class="color-text-a">
                         @if (@Model.Descriptions.Any(d => d.Language == language))
                         {
