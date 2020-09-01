@@ -10,11 +10,11 @@
 @await Component.InvokeAsync("BrandsCarousel")
 
 <!--/ Carousel end /-->
+    <div class="container">
+        <div class="row section-t4">
+            <div class="col-sm-12">
 @foreach (var brand in Model)
 {
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
                 <div class="row brand-intro-box">
                     <div class="col-md-6">
                         <div class="agent-avatar-box">
@@ -92,10 +92,10 @@
                         </div>
                     </div>
                 </div>
+}
             </div>
         </div>
     </div>
-}
 @await Html.PartialAsync("~/Views/Home/Partials/_Contact.cshtml");
 @section Scripts {
     <script src="~/js/contact.js" defer></script>

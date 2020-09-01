@@ -26,7 +26,10 @@ namespace Logic.Services
                 {
                     CreationDate = DateTime.Now,
                     PhoneNumber = contact.Phone,
-                    Email = contact.Email
+                    Email = contact.Email,
+                    Name = contact.Name,
+                    Content = contact.Content,
+                    EditDate = DateTime.Now,
                 });
                 _customerRepository.SaveChanges();
                 return true;

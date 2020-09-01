@@ -6,6 +6,8 @@
         {
             Email: $('#contact-email').val(),
             Phone: $('#contact-phone').val(),
+            Name: $('#contact-name').val(),
+            Content: $('#contact-content').val(),
         }
         if (contact.Phone !== "" && (!$.isNumeric(contact.Phone) || contact.Phone.length !== 9))
         {
@@ -25,7 +27,7 @@
             data: JSON.stringify(contact),
             contentType: "application/json",
             success: function (result) {
-                alert("Kontakt wysłano! Odezwiemy się do Ciebie wkrótce.");
+                alert("Thank you! We'll contact you soon.");
             },
             error: function (result) {
                 console.warn(result);

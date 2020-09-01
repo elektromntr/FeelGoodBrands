@@ -1,35 +1,49 @@
 ﻿<section class="contact-form">
     <div class="container">
         <div class="row">
-            <div class="col-sm-12 section-tb85">
+            <div class="col-sm-12 section-t4">
                 <div class="row">
                     <div class="col-md-12">
-                        <label>Wyślij nam swój kontakt, a wrócimy do Ciebie z ofertą</label>
+                        <label>Do you have a question about products, availability or an idea for joint activities? Leave your details below, we will soon get in touch!</label>
                         <div class="row" 
                              id="contact-form">
-                            <div class="col-md-9 mb-3">
+                            <div class="col-md-10 mb-3">
                                 <div class="form-group">
                                     <div class="row">
                                         <input type="text"
-                                               class="col-md-5 form-control form-control-lg form-control-a"
-                                               placeholder="Podaj nr telefonu"
-                                               id="contact-phone"
-                                               style="height: 59px;">
+                                               class="col-md-3 form-control form-control-lg form-control-a"
+                                               placeholder="Name"
+                                               id="contact-name"
+                                               style="margin-left: 10px; height: 59px;">
                                         <input type="text"
-                                               class="col-md-6 form-control form-control-lg form-control-a"
-                                               placeholder="Podaj email"
+                                               class="col-md-3 form-control form-control-lg form-control-a"
+                                               placeholder="Phone number"
+                                               id="contact-phone"
+                                               style="margin-left: 10px; height: 59px;">
+                                        <input type="text"
+                                               class="col-md-5 form-control form-control-lg form-control-a"
+                                               placeholder="Email"
                                                id="contact-email"
                                                style="margin-left: 10px; height: 59px;">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 mb-3">
+                            <div class="col-md-2 mb-3">
                                 <div class="form-group">
                                     <button class="btn btn-a col-md-12"
                                             role="button"
                                             type="button" onclick="contact.contactMe('@Url.Action("ContactMe", "Home")')">
-                                        Wyślij
+                                        Send
                                     </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group">
+                                    <textarea class="form-control" 
+                                              rows="4"
+                                              id="contact-content"></textarea>
                                 </div>
                             </div>
                         </div>

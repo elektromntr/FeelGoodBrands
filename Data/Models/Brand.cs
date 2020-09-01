@@ -9,7 +9,6 @@ namespace Data.Models
 	public class Brand : BaseModel
 	{
 		public string Name { get; set; }
-		public string Description { get; set; }
 		public ICollection<BrandDescription> Descriptions { get; set; }
 		public ICollection<Product> Products { get; set; }
 		public ICollection<Attachment> Images { get; set; }
