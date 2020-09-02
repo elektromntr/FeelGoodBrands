@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Web.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly IBrandService _brandService;
