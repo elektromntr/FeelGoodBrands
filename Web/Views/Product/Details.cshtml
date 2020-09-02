@@ -1,11 +1,14 @@
 ﻿@using Data.Enums
+@using Logic.Extensions
 @using Microsoft.AspNetCore.Http
 @model Logic.DataTransferObjects.ProductViewModel
 
 @{
     ViewBag.Title = "@Model.Name";
     Layout = "_Layout";
-    var language = Language.English;
+    var language = LanguageExtension.GetLanguage(
+        Context.Session.GetString(LanguageExtension.SessionLanguageKey())
+        );
 }
 
 <section class="section-cover section-t8">

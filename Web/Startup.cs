@@ -31,6 +31,10 @@ namespace Web
 					Configuration.GetConnectionString("DefaultConnection")));
 			services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 				.AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(3);
+            });
 			services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 			services.AddTransient<IBrandService, BrandService>();
 			services.AddTransient<IMediaService, MediaService>();
@@ -58,7 +62,7 @@ namespace Web
 			}
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
-
+            app.UseSession();
 			app.UseRouting();
 
 			app.UseAuthentication();

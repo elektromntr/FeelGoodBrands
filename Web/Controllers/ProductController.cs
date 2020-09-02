@@ -12,28 +12,21 @@ namespace Web.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IBrandService _brandService;
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
 
-        public ProductController(IBrandService brandService,
-            IProductService productService,
+        public ProductController(IProductService productService,
             IMapper mapper)
         {
-            _brandService = brandService;
             _productService = productService;
             _mapper = mapper;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
         }
 
         [HttpGet]
         [Route("Product/Details/{name}")]
         public async Task<IActionResult> Details(string name)
         {
+
             var product = _mapper.Map<ProductViewModel>((await _productService.GetByName(name)));
             return View(product);
         }

@@ -1,9 +1,13 @@
 ﻿@using Data.Enums
+@using Logic.Extensions
+@using Microsoft.AspNetCore.Http
 @model IList<Data.Models.Brand>
 @{
     ViewData["Title"] = "Strona główna";
     Layout = "_Layout";
-    var Language = Data.Enums.Language.Polish;
+    var language = LanguageExtension.GetLanguage(
+        Context.Session.GetString(LanguageExtension.SessionLanguageKey())
+        );
 }
 <!--/ Carousel Star /-->
 
@@ -37,15 +41,15 @@
                             </div>
                             <div class="agent-content">
                                 <p class="content-d color-text-a">
-                                    @if (brand.Descriptions.Any(d => d.Language == Language))
+                                    @if (brand.Descriptions.Any(d => d.Language == language))
                                     {
                                         if (brand.Descriptions
-                                            .FirstOrDefault(d => d.Language == Language)?
+                                            .FirstOrDefault(d => d.Language == language)?
                                             .Text.Length > 500)
                                         {
                                             <span>
                                                 @Html.Raw(brand.Descriptions
-                                                         .FirstOrDefault(d => d.Language == Language)?
+                                                         .FirstOrDefault(d => d.Language == language)?
                                                          .Text.Substring(0, 500))...
                                             </span>
                                         }
@@ -53,7 +57,7 @@
                                         {
                                             <span>
                                                 @Html.Raw(brand.Descriptions
-                                                    .FirstOrDefault(d => d.Language == Language)?
+                                                    .FirstOrDefault(d => d.Language == language)?
                                                     .Text)
                                             </span>
                                         }
