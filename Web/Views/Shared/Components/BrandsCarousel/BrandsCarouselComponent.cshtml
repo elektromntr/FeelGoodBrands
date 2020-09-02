@@ -11,17 +11,17 @@
                             <div class="row">
                                 <div class="col-lg-8">
                                     <div class="intro-body">
-                                        <p class="intro-title-top">
+                                        @*<p class="intro-title-top">
                                             @if (brand.CreationDate > DateTime.Now.AddDays(-7))
                                             {
-                                                <span>Nowość!</span>
+                                                <span>New!</span>
                                             }
-                                        </p>
+                                        </p>*@
                                         @*<h1 class="intro-title mb-4">
                                             @brand.Name
                                         </h1>*@
                                         <p class="intro-subtitle intro-price">
-                                            <a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")"><span class="price-a">Zobacz</span></a>
+                                            <a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")"><span class="price-a">See details</span></a>
                                         </p>
                                     </div>
                                 </div>

@@ -82,27 +82,9 @@
 </section>
 @if (Model.Products != null && Model.Products.Count > 0)
 {
-    @await Html.PartialAsync("~/Views/Admin/Partials/_BrandProducts.cshtml", Model.Products.ToList());
+    @await Html.PartialAsync("~/Views/Brand/Partials/_BrandProducts.cshtml", Model.Products.ToList());
 }
-@if (User.Identity.IsAuthenticated)
-{
-    <section class="admin mb-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 col-lg-4">
-                    <a asp-controller="Admin" asp-action="EditBrand" asp-route-id="@Model.Id">
-                        <button class="btn btn-a"
-                                role="button"
-                                type="button">
-                            Edytuj brand
-                        </button>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-}
-
+@await Html.PartialAsync("~/Views/Home/Partials/_Contact.cshtml");
 @section Scripts {
     <script src="~/js/brand.js" defer></script>
 }
