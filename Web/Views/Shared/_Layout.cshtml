@@ -1,5 +1,10 @@
-﻿@{
+﻿@using Logic.Extensions
+@using Microsoft.AspNetCore.Http
+@{
     var setSessionLanguage = @Url.Action("SetSessionLanguage", "Language");
+    var language = LanguageExtension.GetLanguage(
+        Context.Session.GetString(LanguageExtension.SessionLanguageKey())
+        );
 }
 <!DOCTYPE html>
 <html lang="pl">
@@ -62,10 +67,14 @@
                             <a class="nav-link" asp-action="Index" asp-controller="Home">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#footer">About</a>
+                            <a class="nav-link" href="#footer">
+                                @LanguageExtension.GetTranslatedString(language, "About")
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#footer">Contact</a>
+                            <a class="nav-link" href="#footer">
+                                @LanguageExtension.GetTranslatedString(language, "Contact")
+                            </a>
                         </li>
                         <li class="nav-item">
                             <span class="nav-link js-language-change"

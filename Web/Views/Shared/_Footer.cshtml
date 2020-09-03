@@ -1,4 +1,12 @@
-﻿<!--/ footer Star /-->
+﻿@using Logic.Extensions
+@using Microsoft.AspNetCore.Http
+@{
+    var language = LanguageExtension.GetLanguage(
+        Context.Session.GetString(LanguageExtension.SessionLanguageKey())
+        );
+}
+
+<!--/ footer Star /-->
 <section class="section-footer" id="footer">
     <div class="container">
         <div class="row">
@@ -17,7 +25,9 @@
             <div class="col-sm-12 col-md-6 section-md-t3">
                 <div class="widget-a text-right">
                     <div class="w-header-a">
-                        <h3 class="w-title-a text-brand">contact</h3>
+                        <h3 class="w-title-a text-brand">
+                            @LanguageExtension.GetTranslatedString(language, "Contact")
+                        </h3>
                     </div>
                     <div class="w-body-a">
                         <div class="w-body-a">

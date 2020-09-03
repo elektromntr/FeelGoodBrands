@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "About",
+    "Translations": {
+      "English": "About",
+      "Polish": "O nas"
+    }  
+    
+  },
+  {
+    "Name": "Contact",
+    "Translations": {
+      "English": "Contact",
+      "Polish": "Kontakt"
+    }
+  }
+]

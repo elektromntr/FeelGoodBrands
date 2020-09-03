@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
+using System.Linq;
 using Data.Enums;
+using Newtonsoft.Json;
+// ReSharper disable ClassNeverInstantiated.Local
+#pragma warning disable 649
 
 namespace Logic.Extensions
 {
@@ -19,5 +23,35 @@ namespace Logic.Extensions
         }
 
         public static string SessionLanguageKey() => SessionLanguageKeyName;
+
+        public static string GetTranslatedString(Language language, string key)
+        {
+            using StreamReader r = new StreamReader(@"C:\Users\bwoj02_admin\source\repos\FeelGoodBrands\Web\wwwroot\tarnslator\dictionary.json");
+            List<DictionaryItem> items = JsonConvert.DeserializeObject<List<DictionaryItem>>(r.ReadToEnd());
+            var itemToTranslate = items.First(k => k.Name == key).Translations;
+            string translation = "";
+            switch (language)
+            {
+                case Language.Polish:
+                    translation = itemToTranslate.Polish;
+                    break;
+                case Language.English:
+                    translation = itemToTranslate.English;
+                    break;
+            }
+            return translation;
+        }
+
+        private class DictionaryItem
+        {
+            public string Name;
+            public Translation Translations;
+        }
+
+        private class Translation
+        {
+            public string English;
+            public string Polish;
+        }
     }
 }
