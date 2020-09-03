@@ -8,6 +8,7 @@ namespace Logic.Extensions
     public static class LanguageExtension
     {
         private static readonly Language defaultLanguage = Language.English;
+        private const string SessionLanguageKeyName = "Language";
         
         public static Data.Enums.Language GetLanguage(string language)
         {
@@ -17,6 +18,6 @@ namespace Logic.Extensions
             return resultLanguage;
         }
 
-        public static string SessionLanguageKey() => "Language";
+        public static string SessionLanguageKey() => SessionLanguageKeyName;
     }
 }
