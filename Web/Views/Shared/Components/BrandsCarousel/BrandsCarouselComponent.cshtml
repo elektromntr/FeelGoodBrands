@@ -1,8 +1,17 @@
-﻿@model IEnumerable<Data.Models.Brand>
-    <div class="intro intro-carousel">
-        <div id="carousel" class="owl-carousel owl-theme">
-@foreach (var brand in Model)
-{
+﻿@using Logic.Extensions
+@using Microsoft.AspNetCore.Http
+@model IEnumerable<Data.Models.Brand>
+
+@{
+    var language = LanguageExtension.GetLanguage(
+        Context.Session.GetString(LanguageExtension.SessionLanguageKey())
+        );
+}
+
+<div class="intro intro-carousel">
+    <div id="carousel" class="owl-carousel owl-theme">
+        @foreach (var brand in Model)
+        {
             <div class="carousel-item-a intro-item bg-image" style="background-image: url('data:@brand.Cover.FileMimeType;base64,@Convert.ToBase64String(brand.Cover.FileData)');">
                 <div class="overlay overlay-a"></div>
                 <div class="intro-content display-table">
@@ -12,16 +21,16 @@
                                 <div class="col-lg-8">
                                     <div class="intro-body">
                                         @*<p class="intro-title-top">
-                                            @if (brand.CreationDate > DateTime.Now.AddDays(-7))
-                                            {
-                                                <span>New!</span>
-                                            }
-                                        </p>*@
+                                                @if (brand.CreationDate > DateTime.Now.AddDays(-7))
+                                                {
+                                                    <span>New!</span>
+                                                }
+                                            </p>*@
                                         @*<h1 class="intro-title mb-4">
-                                            @brand.Name
-                                        </h1>*@
+                                                @brand.Name
+                                            </h1>*@
                                         <p class="intro-subtitle intro-price">
-                                            <a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")"><span class="price-a">See details</span></a>
+                                            <a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")"><span class="price-a">@LanguageExtension.GetTranslatedString(language, "Details")</span></a>
                                         </p>
                                     </div>
                                 </div>
@@ -30,6 +39,6 @@
                     </div>
                 </div>
             </div>
-}
-        </div>
+        }
     </div>
+</div>
