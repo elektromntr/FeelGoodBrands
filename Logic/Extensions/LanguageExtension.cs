@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Data.Enums;
 using Newtonsoft.Json;
 // ReSharper disable ClassNeverInstantiated.Local
@@ -26,7 +27,8 @@ namespace Logic.Extensions
 
         public static string GetTranslatedString(Language language, string key)
         {
-            using StreamReader r = new StreamReader(@"translator\dictionary.json");
+            var path = Path.GetDirectoryName("wwwroot/translator/dictionary.json");
+            using StreamReader r = new StreamReader(Path.Combine(path, "dictionary.json"));
             List<DictionaryItem> items = JsonConvert.DeserializeObject<List<DictionaryItem>>(r.ReadToEnd());
             var itemToTranslate = items.First(k => k.Name == key).Translations;
             string translation = "";
