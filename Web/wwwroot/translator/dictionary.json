@@ -28,10 +28,46 @@
     }
   },
   {
+    "Name": "Name",
+    "Translations": {
+      "English": "Name",
+      "Polish": "Imię"
+    }
+  },
+  {
+    "Name": "Phone",
+    "Translations": {
+      "English": "Phone number",
+      "Polish": "Telefon"
+    }
+  },
+  {
+    "Name": "Questions",
+    "Translations": {
+      "English": "Any questions?",
+      "Polish": "Jakieś pytania?"
+    }
+  },
+  {
+    "Name": "Form",
+    "Translations": {
+      "English": "Do you have a question about products, availability or an idea for joint activities? Leave your details below, we will soon get in touch!",
+      "Polish": "Masz pytanie o produkty, dostępność a może pomysł na wspólne działania? Zostaw swoje dane, skontaktujemy się z Tobą!"
+    }
+  },
+  {
+    "Name": "Send",
+    "Translations": {
+      "English": "Send",
+      "Polish": "Wyślij"
+    }
+  },
+  {
     "Name": "Materie",
     "Translations": {
       "English": "it's a place that gathers good brands and great products; products that are not only functional and well-designed, but above all care for the natural environment and its resources.",
       "Polish": "to miejsce gdzie skupiamy dobre marki i dobre produkty; produkty które nie tylko są funkcjonalne i dobrze zaprojektowane ale przede wszystkim dbają o środowisko naturalne i jego zasoby."
     }
   }
+
 ]

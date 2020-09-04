@@ -1,10 +1,19 @@
-﻿<section class="contact-form">
+﻿@using Logic.Extensions
+@using Microsoft.AspNetCore.Http
+@{
+    var language = LanguageExtension.GetLanguage(
+        Context.Session.GetString(LanguageExtension.SessionLanguageKey())
+        );
+}
+<section class="contact-form">
     <div class="container">
         <div class="row">
             <div class="col-sm-12 section-t4">
                 <div class="row">
                     <div class="col-md-12">
-                        <label>Do you have a question about products, availability or an idea for joint activities? Leave your details below, we will soon get in touch!</label>
+                        <label>
+                            @LanguageExtension.GetTranslatedString(language, "Form")
+                        </label>
                         <div class="row" 
                              id="contact-form">
                             <div class="col-md-10">
@@ -12,12 +21,12 @@
                                     <div class="row">
                                         <input type="text"
                                                class="col-md-3 form-control form-control-lg form-control-a"
-                                               placeholder="Name"
+                                               placeholder="@LanguageExtension.GetTranslatedString(language, "Name")"
                                                id="contact-name"
                                                style="margin-left: 10px; height: 59px;">
                                         <input type="text"
                                                class="col-md-3 form-control form-control-lg form-control-a"
-                                               placeholder="Phone number"
+                                               placeholder="@LanguageExtension.GetTranslatedString(language, "Phone")"
                                                id="contact-phone"
                                                style="margin-left: 10px; height: 59px;">
                                         <input type="text"
@@ -33,7 +42,7 @@
                                     <button class="btn btn-a col-md-12"
                                             role="button"
                                             type="button" onclick="contact.contactMe('@Url.Action("ContactMe", "Home")')">
-                                        Send
+                                        @LanguageExtension.GetTranslatedString(language, "Send")
                                     </button>
                                 </div>
                             </div>
@@ -44,7 +53,7 @@
                                     <textarea class="form-control" 
                                               rows="4"
                                               id="contact-content"
-                                              placeholder="Any questions?"
+                                              placeholder="@LanguageExtension.GetTranslatedString(language, "Questions")"
                                               style="margin: -5px;"></textarea>
                                 </div>
                             </div>
