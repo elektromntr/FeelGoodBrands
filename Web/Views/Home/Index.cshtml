@@ -89,7 +89,11 @@
                                     }
                                 </p>
                                 <p class="intro-subtitle intro-price socials-footer">
-                                    <a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")"><span class="price-b">See details</span></a>
+                                    <a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")">
+                                        <span class="price-b">
+                                            @LanguageExtension.GetTranslatedString(language, "Details")
+                                        </span>
+                                    </a>
                                 </p>
                             </div>
 

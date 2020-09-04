@@ -1,0 +1,37 @@
+[
+  {
+    "Name": "About",
+    "Translations": {
+      "English": "About",
+      "Polish": "O nas"
+    }
+  },
+  {
+    "Name": "Home",
+    "Translations": {
+      "English": "Home",
+      "Polish": "Strona główna"
+    }  
+  },
+  {
+    "Name": "Contact",
+    "Translations": {
+      "English": "Contact",
+      "Polish": "Kontakt"
+    }
+  },
+  {
+    "Name": "Details",
+    "Translations": {
+      "English": "See details",
+      "Polish": "Zobacz"
+    }
+  },
+  {
+    "Name": "Materie",
+    "Translations": {
+      "English": "it's a place that gathers good brands and great products; products that are not only functional and well-designed, but above all care for the natural environment and its resources.",
+      "Polish": "to miejsce gdzie skupiamy dobre marki i dobre produkty; produkty które nie tylko są funkcjonalne i dobrze zaprojektowane ale przede wszystkim dbają o środowisko naturalne i jego zasoby."
+    }
+  }
+]

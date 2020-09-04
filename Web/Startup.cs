@@ -33,7 +33,7 @@ namespace Web
 				.AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddDistributedMemoryCache();
             services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(3);
+                options.IdleTimeout = TimeSpan.FromMinutes(9);
             });
 			services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 			services.AddTransient<IBrandService, BrandService>();

@@ -17,7 +17,7 @@
                     </div>
                     <div class="w-body-a">
                         <p class="w-text-a color-text-a">
-                            it's a place that gathers good brands and great products; products that are not only functional and well-designed, but above all care for the natural environment and its resources.
+                            @LanguageExtension.GetTranslatedString(language, "Materie")
                         </p>
                     </div>
                 </div>
@@ -68,10 +68,10 @@
                             <a asp-action="Index" asp-controller="Home">Home</a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#footer">About</a>
+                            <a href="#footer">@LanguageExtension.GetTranslatedString(language, "About")</a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#footer">Contact</a>
+                            <a href="#footer">@LanguageExtension.GetTranslatedString(language, "Contact")</a>
                         </li>
                     </ul>
                 </nav>
