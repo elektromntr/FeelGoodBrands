@@ -35,6 +35,7 @@ namespace Web
             services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(9);
             });
+			services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
 			services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 			services.AddTransient<IBrandService, BrandService>();
 			services.AddTransient<IMediaService, MediaService>();

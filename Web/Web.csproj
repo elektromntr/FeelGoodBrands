@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="appsettingsAZR.Development.json" />
+    <Content Remove="appsettingsAZR.json" />
     <Content Remove="Views\Admin\Brand\CreateBrandOld.cshtml" />
     <Content Remove="Views\Admin\EditBrandOld.cshtml" />
   </ItemGroup>

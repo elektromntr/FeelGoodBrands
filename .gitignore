@@ -343,3 +343,5 @@ healthchecksdb
 /Web/appsettingsAZR.json
 /Web/appsettingsAZR.Development.json
 /Web/ScaffoldingReadMe.txt
+/Web/appsettings.Production.json
+/Web/appsettings.Development.json
