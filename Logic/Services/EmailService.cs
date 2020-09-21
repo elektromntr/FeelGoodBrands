@@ -7,7 +7,6 @@ using Data.Repository;
 using Logic.DataTransferObjects;
 using Logic.Services.Interfaces;
 using MailKit.Net.Smtp;
-using Microsoft.Extensions.Options;
 using MimeKit;
 
 namespace Logic.Services

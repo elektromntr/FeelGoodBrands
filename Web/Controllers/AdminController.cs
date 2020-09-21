@@ -43,7 +43,9 @@ namespace Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View(_mapper.Map<List<BrandViewModel>>(await _brandService.GetAll()));
+	        var brands = _mapper.Map<List<BrandViewModel>>(await _brandService.GetAll());
+	        ViewBag.OrderMax = brands.Max(b => b.Order);
+            return View(brands);
         }
 
         public IActionResult CreateBrand() => View("~/Views/Admin/Brand/CreateBrand.cshtml");
@@ -210,6 +212,13 @@ namespace Web.Controllers
             if (!ModelState.IsValid) return View("~/Views/Admin/Product/EditProduct.cshtml", editedProduct);
             var resultProduct = await _productService.Update(editedProduct);
             return RedirectToAction("EditBrand", new { id = resultProduct.BrandId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeBrandOrder(Guid brandGuid, bool moveUp)
+        {
+	        await _brandService.ChangeBrandOrder(brandGuid, moveUp);
+	        return RedirectToAction("Index");
         }
     }
 }

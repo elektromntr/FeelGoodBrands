@@ -77,7 +77,29 @@
         });
     }
 
+    brand.changeBrandOrder = (e) => {
+        var moveUp = e.currentTarget.attributes['data-moveup'].value;
+        var guid = e.currentTarget.attributes['data-brandguid'].value;
+        $.ajax({
+	        type: "POST",
+            url: e.currentTarget.attributes['data-url'].value,
+	        data: {
+		        brandGuid: guid,
+		        moveUp: moveUp
+	        },
+	        success: function (result) {
+                window.location.reload();
+	        },
+	        error: function (result) {
+		        console.warn(result);
+	        }
+        });
+    }
+
     $(document).ready(() => {
         brand.refreshBrandPartial();
+        $('.js-change-order').on('click', function (e) {
+	        brand.changeBrandOrder(e);
+        });
     });
 })(window.brand = window.brand || {}, jQuery);

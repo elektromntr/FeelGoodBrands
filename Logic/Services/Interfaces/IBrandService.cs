@@ -20,5 +20,6 @@ namespace Logic.Services.Interfaces
         Task CreateDescription(BrandDescription description);
         Task<BrandDescription> GetDescriptionById(Guid guid);
         void UpdateDescription(BrandDescription description);
+        Task ChangeBrandOrder(Guid brandGuid, bool moveUp);
     }
 }

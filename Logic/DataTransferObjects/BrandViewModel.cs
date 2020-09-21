@@ -14,5 +14,6 @@ namespace Logic.DataTransferObjects
         public ICollection<Media> Medias { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime EditDate { get; set; }
+        public int Order { get; set; }
     }
 }

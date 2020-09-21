@@ -14,48 +14,69 @@
 </p>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                Brand name
-            </th>
-            
-            <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EditDate)
-            </th>
-            <th>
-                Actions
-            </th>
-        </tr>
+    <tr>
+	    <th>
+            Order
+	    </th>
+	    <th>
+		    Brand name
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.CreationDate)
+	    </th>
+	    <th>
+		    @Html.DisplayNameFor(model => model.EditDate)
+	    </th>
+	    <th>
+		    Actions
+	    </th>
+    </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
-            </td>
-            <td>
-                @if (@item.EditDate == default(DateTime))
-                {
-                    <span>Nie edytowano</span>
-                }
-                else
-                {
-                    @Html.DisplayFor(modelItem => item.EditDate)
-                }
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditBrand", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", "Brand", new { name = item.Name.Replace(" ", "") }) |
-                @Html.ActionLink("Delete", "DeleteBrand", new { id = item.Id })
-            </td>
-        </tr>
+	<tr>
+		<td>
+			@if (item.Order != 1)
+			{
+				<button class="btn btn-outline-success js-change-order"
+				        data-moveup="true"
+				        data-url="@Url.Action("ChangeBrandOrder", "Admin")"
+				        data-brandguid="@item.Id">Up</button>
+			}
+			@if (item.Order != ViewBag.OrderMax)
+			{
+				<button class="btn btn-outline-warning js-change-order"
+				        data-moveup="false"
+				        data-url="@Url.Action("ChangeBrandOrder", "Admin")"
+				        data-brandguid="@item.Id">Down</button>
+			}
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.Name)
+		</td>
+
+		<td>
+			@Html.DisplayFor(modelItem => item.CreationDate)
+		</td>
+		<td>
+			@if (@item.EditDate == default(DateTime))
+			{
+				<span>Nie edytowano</span>
+			}
+			else
+			{
+				@Html.DisplayFor(modelItem => item.EditDate)
+			}
+		</td>
+		<td>
+			@Html.ActionLink("Edit", "EditBrand", new {id = item.Id}) |
+			@Html.ActionLink("Details", "Details", "Brand", new {name = item.Name.Replace(" ", "")}) |
+			@Html.ActionLink("Delete", "DeleteBrand", new {id = item.Id})
+		</td>
+	</tr>
 }
     </tbody>
 </table>
+@section Scripts{ 
+	<script src="~/js/brand.js" defer></script>
+}

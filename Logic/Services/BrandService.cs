@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using Data.Enums;
+using MailKit.Search;
 
 namespace Logic.Services
 {
@@ -216,6 +217,32 @@ namespace Logic.Services
             _brandDescriptionRepository.SaveChanges();
         }
 
+        public async Task ChangeBrandOrder(Guid brandGuid, bool moveUp)
+        {
+            var brand = new Brand();
+            var otherBrand = new Brand();
+	        if (moveUp)
+	        {
+		        brand = await _brandRepository.GetById(brandGuid);
+		        otherBrand = _brandRepository.Get().First(b => b.Order == (brand.Order - 1));
+		        brand.Order -= 1;
+		        otherBrand.Order += 1;
+                
+	        }
+	        else
+	        {
+		        brand = await _brandRepository.GetById(brandGuid);
+		        otherBrand = _brandRepository.Get().First(b => b.Order == brand.Order + 1);
+		        brand.Order += 1;
+		        otherBrand.Order -= 1;
+            }
+	        brand.EditDate = DateTime.Now;
+	        otherBrand.EditDate = DateTime.Now;
+	        _brandRepository.Update(brand);
+	        _brandRepository.Update(otherBrand);
+            _brandRepository.SaveChanges();
+        }
+
         public async Task<List<Brand>> GetAll() => await 
             _brandRepository.Get()
                 .Include(b => b.Descriptions)
@@ -223,7 +250,9 @@ namespace Logic.Services
                 .Include(b => b.Cover)
                 .Where(b => b.CoverId != null 
                             && b.CoverId != System.Guid.Empty
-                            && !b.Archived).ToListAsync();
+                            && !b.Archived)
+                .OrderBy(b => b.Order)
+                .ToListAsync();
         
     }
 }

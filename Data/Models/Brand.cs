@@ -20,5 +20,6 @@ namespace Data.Models
 		[ForeignKey("CoverId")]
 		public Attachment Cover { get; set; }
 		public bool Archived { get; set; }
+		public int Order { get; set; }
 	}
 }
