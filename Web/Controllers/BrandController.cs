@@ -33,5 +33,20 @@ namespace Web.Controllers
             var brand = await _brandService.GetByName(name);
             return View(_mapper.Map<BrandViewModel>(brand));
         }
+
+        [HttpGet]
+        [Route("Brand/Details/{id:Guid}")]
+        public async Task<IActionResult> Details(Guid id)
+        {
+	        try
+	        {
+		        var brand = await _brandService.GetByIdWithImages(id);
+		        return View(_mapper.Map<BrandViewModel>(brand));
+	        }
+	        catch (Exception e)
+	        {
+		        throw new Exception(e.Message);
+	        }
+        }
     }
 }

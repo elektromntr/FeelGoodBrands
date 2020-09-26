@@ -21,5 +21,6 @@ namespace Logic.Services.Interfaces
         Task<BrandDescription> GetDescriptionById(Guid guid);
         void UpdateDescription(BrandDescription description);
         Task ChangeBrandOrder(Guid brandGuid, bool moveUp);
+        Task<Guid> GetBrandByReferenceId(Guid referenceId);
     }
 }

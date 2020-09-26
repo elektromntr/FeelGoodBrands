@@ -14,5 +14,6 @@ namespace Logic.Services.Interfaces
         Task<ProductDescription> GetDescriptionById(Guid guid);
         void UpdateDescription(ProductDescription description);
         Task<Product> GetByName(string name);
+        Task<Guid> GetBrandIdForProduct(Guid id);
     }
 }

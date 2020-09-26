@@ -12,5 +12,7 @@ namespace Data.Models
 		public Guid ReferenceId { get; set; }
 		public string Description { get; set; }
 		public AttachmentType Type { get; set; }
+		public bool InCarousel { get; set; }
+		public int CarouselOrder { get; set; }
 	}
 }

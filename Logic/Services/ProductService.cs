@@ -55,6 +55,8 @@ namespace Logic.Services
 
         public async Task<Product> GetById(Guid guid)
         {
+	        try
+	        {
             var result = _productRepository.Get()
                 .AsNoTracking()
                 .FirstOrDefault(p => p.Id == guid);
@@ -66,7 +68,26 @@ namespace Logic.Services
                 .Where(d => d.ProductId == result.Id).ToList();
             result.Brand = await _brandRepository.GetById(result.BrandId);
             return result;
+	        }
+	        catch (Exception e)
+	        {
+		        throw new Exception("Product not found", e);
+	        }
         }
+
+        public async Task<Guid> GetBrandIdForProduct(Guid id)
+		{
+			try
+			{
+				var result = await _productRepository.GetById(id);
+				return result?.BrandId ?? Guid.Empty;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
 
         public async Task<Product> Update(EditProduct model)
         {

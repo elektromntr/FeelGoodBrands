@@ -20,16 +20,19 @@ namespace Logic.Services
         private readonly IRepository<Attachment> _attachmentRepository;
         private readonly IRepository<Media> _mediaRepository;
         private readonly IRepository<BrandDescription> _brandDescriptionRepository;
+        private readonly IProductService _productService;
 
         public BrandService(IRepository<Brand> brandRepository,
             IRepository<Attachment> attachmentRepository,
             IRepository<Media> mediaRepository,
-            IRepository<BrandDescription> brandDescriptionRepository)
+            IRepository<BrandDescription> brandDescriptionRepository,
+            IProductService productService)
         {
             _brandRepository = brandRepository;
             _attachmentRepository = attachmentRepository;
             _mediaRepository = mediaRepository;
             _brandDescriptionRepository = brandDescriptionRepository;
+            _productService = productService;
         }
 
         public async Task<Brand> Create(CreateBrand newBrand)
@@ -243,10 +246,19 @@ namespace Logic.Services
             _brandRepository.SaveChanges();
         }
 
+        public async Task<Guid> GetBrandByReferenceId(Guid referenceId)
+        {
+            var brand = (await _brandRepository.GetById(referenceId))?.Id;
+            var prod = await _productService.GetBrandIdForProduct(referenceId);
+            if (brand != null && brand != Guid.Empty)
+	            return brand.GetValueOrDefault();
+            else
+	            return prod;
+        }
+
         public async Task<List<Brand>> GetAll() => await 
             _brandRepository.Get()
                 .Include(b => b.Descriptions)
-                .Include(b => b.Images)
                 .Include(b => b.Cover)
                 .Where(b => b.CoverId != null 
                             && b.CoverId != System.Guid.Empty

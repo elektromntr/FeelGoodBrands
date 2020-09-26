@@ -59,5 +59,12 @@ namespace Web.Controllers
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
+
+		[HttpGet]
+		public async Task<IActionResult> SeeMore(Guid id)
+		{
+			var brandGuid = await _brandService.GetBrandByReferenceId(id);
+			return RedirectToAction("Details", "Brand", new { id = brandGuid});
+		}
 	}
 }
