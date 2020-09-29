@@ -48,6 +48,13 @@ namespace Web.Controllers
             return View(brands);
         }
 
+        public async Task<IActionResult> EditCarousel()
+		{
+			var attachments = await _brandService.GetAttachmentsFromActiveBrands();
+			ViewBag.OrderMax = attachments.Max(a => a.CarouselOrder);
+			return View("~/Views/Admin/EditCarousel.cshtml", attachments);
+		}
+
         public IActionResult CreateBrand() => View("~/Views/Admin/Brand/CreateBrand.cshtml");
 
         [HttpPost]
@@ -219,6 +226,26 @@ namespace Web.Controllers
         {
 	        await _brandService.ChangeBrandOrder(brandGuid, moveUp);
 	        return RedirectToAction("Index");
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> ChangeCarouselOrder(Guid guid, bool moveUp)
+        {
+	        await _attachmentService.ChangeCarouselOrder(guid, moveUp);
+	        return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task SwitchCarousel(Guid guid)
+        {
+	        try
+	        {
+				await _attachmentService.SwitchCarousel(guid);
+	        }
+	        catch (Exception e)
+	        {
+		        throw;
+	        }
         }
     }
 }

@@ -37,7 +37,8 @@ namespace Web.Controllers
         }
 
 		public async Task<IActionResult> Index()
-        {
+		{
+
             var brands = await _brandService.GetAll();
 			return View(brands);
 		}

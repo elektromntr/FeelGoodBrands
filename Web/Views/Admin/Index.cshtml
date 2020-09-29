@@ -7,11 +7,19 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-controller="Admin" 
-       asp-action="CreateBrand"
-       class="btn btn-success">Utwórz nowy brand</a>
-</p>
+<div class="row"
+	 style="margin-bottom: 10px;">
+	<div class="col-md-3">
+		<a asp-controller="Admin"
+		   asp-action="CreateBrand"
+		   class="btn btn-success">Utwórz nowy brand</a>
+	</div>
+	<div class="col-md-3">
+		<a asp-controller="Admin"
+		   asp-action="EditCarousel"
+		   class="btn btn-success">Edutyj karuzelę zdjęć</a>
+	</div>
+</div>
 <table class="table">
     <thead>
     <tr>

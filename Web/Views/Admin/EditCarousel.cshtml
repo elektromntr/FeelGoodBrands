@@ -1,0 +1,135 @@
+﻿@model IEnumerable<Data.Models.Attachment>
+
+@{
+	ViewData["Title"] = "Carousel";
+	Layout = "~/Areas/Identity/Pages/Account/_IdentityLayout.cshtml";
+}
+
+<h1>Carousel</h1>
+
+<table id="carousel-table"
+	   class="table">
+	<thead>
+	<tr>
+		<th>
+			Order
+		</th>
+		<th>
+			Change order
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Description)
+		</th>
+		<th>
+			Pic
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.CreationDate)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.EditDate)
+		</th>
+		<th>
+			Actions
+		</th>
+	</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.Where(m => m.InCarousel).OrderBy(a => a.CarouselOrder))
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.CarouselOrder)
+				</td>
+				<td>
+					@if (item.CarouselOrder != 1)
+					{
+						<button class="btn btn-outline-success js-change-order"
+						        data-moveup="true"
+						        data-url="@Url.Action("ChangeCarouselOrder", "Admin")"
+						        data-guid="@item.Id">Up</button>
+					}
+					@if (item.CarouselOrder != ViewBag.OrderMax)
+					{
+						<button class="btn btn-outline-warning js-change-order"
+						        data-moveup="false"
+						        data-url="@Url.Action("ChangeCarouselOrder", "Admin")"
+						        data-guid="@item.Id">Down</button>
+					}
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Description)
+				</td>
+				<td>
+					<img width="140px" src="data:@item.FileMimeType;base64,@System.Convert.ToBase64String(item.FileData)" alt="@item.Description" class="img-fluid">
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.CreationDate)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.EditDate)
+				</td>
+				<td>
+					<button class="btn btn-outline-warning js-carousel-switch"
+					        data-url="@Url.Action("SwitchCarousel", "Admin")"
+					        data-guid="@item.Id">
+						Remove from carousel
+					</button>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+
+<table id="covers-table"
+	   class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Description)
+			</th>
+			<th>
+				Pic
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.CreationDate)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.EditDate)
+			</th>
+			<th>
+				Actions
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.Where(m => !m.InCarousel).OrderByDescending(a => a.EditDate))
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Description)
+				</td>
+				<td>
+					<img width="140px" src="data:@item.FileMimeType;base64,@System.Convert.ToBase64String(item.FileData)" alt="@item.Description" class="img-fluid">
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.CreationDate)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.EditDate)
+				</td>
+				<td>
+					<button class="btn btn-outline-warning js-carousel-switch"
+							data-url="@Url.Action("SwitchCarousel", "Admin")"
+							data-guid="@item.Id">
+						Add to carousel
+					</button>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+@section Scripts{
+	<script src="~/js/carousel.js" defer></script>
+}

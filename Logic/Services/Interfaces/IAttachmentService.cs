@@ -12,5 +12,7 @@ namespace Logic.Services.Interfaces
     {
         Task<List<Attachment>> Delete(Guid attachmentId);
         Task<Guid> SaveCover(Guid referenceGuid, string referenceName, IFormFile cover);
+        Task SwitchCarousel(Guid guid);
+        Task ChangeCarouselOrder(Guid guid, bool moveUp);
     }
 }

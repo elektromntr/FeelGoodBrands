@@ -43,13 +43,14 @@ namespace Logic.Services
                     throw new Exception("Brand o takiej nazwie już istnieje");
 
                 var brandGuid = Guid.NewGuid();
-                
+                var maxBrandOrder = _brandRepository.Get().MaxAsync(b => b.Order);
                 var brandToCreate = new Brand
                 {
                     CreationDate = DateTime.Now,
                     EditDate = DateTime.Now,
                     Id = brandGuid,
-                    Name = newBrand.Name
+                    Name = newBrand.Name,
+                    Order = await maxBrandOrder +1
                 };
 
                 if (newBrand.Cover == null) throw new Exception("Brak zdjęcia głównego dla brandu");
@@ -65,7 +66,7 @@ namespace Logic.Services
             }
         }
 
-        private async Task<Guid> SaveCover (Guid brandGuid, string brandName, IFormFile cover)
+        private async Task<Guid> SaveCover(Guid brandGuid, string brandName, IFormFile cover)
         {
             using (var memoryStream = new MemoryStream())
             {
@@ -190,9 +191,16 @@ namespace Logic.Services
         {
             try
             {
-                _attachmentRepository.DeleteRange(_attachmentRepository.Get().Where(a => a.ReferenceId == id));
+	            var brandToDelete = await _brandRepository.GetById(id);
+	            _attachmentRepository.DeleteRange(_attachmentRepository.Get().Where(a => a.ReferenceId == id));
                 _mediaRepository.DeleteRange(_mediaRepository.Get().Where(m => m.BrandId == id));
-                await _brandRepository.Delete(id);
+                var brands = _brandRepository.Get().Where(b => b.Order > brandToDelete.Order);
+                foreach (var b in brands)
+                {
+	                b.Order -= 1;
+                    _brandRepository.Update(b);
+                }
+                _brandRepository.Delete(brandToDelete);
                 await _brandRepository.SaveChangesAsync();
             }
             catch (Exception e)
@@ -266,5 +274,25 @@ namespace Logic.Services
                 .OrderBy(b => b.Order)
                 .ToListAsync();
         
+        public async Task<List<Attachment>> GetAttachmentsFromActiveBrands()
+        {
+	        var brands = _brandRepository.Get()
+		        .Include(b => b.Cover)
+		        .Include(b => b.Products).ThenInclude(p => p.Image)
+		        .AsNoTracking()
+		        .Where(b => !b.Archived)
+		        .OrderBy(a => a.Order)
+		        .AsEnumerable();
+
+	        var atts = new List<Attachment>();
+
+	        foreach (var b in brands)
+	        {
+		        atts.Add(b.Cover);
+                atts.AddRange(b.Products.Select(c => c.Image));
+	        }
+
+	        return atts.ToList();
+        }
     }
 }
