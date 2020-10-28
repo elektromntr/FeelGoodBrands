@@ -1990,8 +1990,13 @@ footer .credits {
     font-size: 1.8rem;
   }
 
+    .text-brand > img {
+        max-width: 200px;
+	    max-height: 36px;
+    }
+	
   .section-t8 {
-    padding-top: 4rem;
+    padding-top: 7rem;
   }
 
   .section-t4 {
