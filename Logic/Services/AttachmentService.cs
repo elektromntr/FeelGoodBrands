@@ -6,6 +6,7 @@ using Data.Models;
 using Data.Repository;
 using Logic.Services.Interfaces;
 using System.Linq;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 
 namespace Logic.Services
@@ -13,6 +14,7 @@ namespace Logic.Services
 	public class AttachmentService : IAttachmentService
 	{
 		private readonly IRepository<Attachment> _attachmentRepository;
+		private readonly IWebHostEnvironment _environment;
 
 		public AttachmentService(IRepository<Attachment> attachmentRepository)
 		{
@@ -107,5 +109,7 @@ namespace Logic.Services
 			}
 			await _attachmentRepository.SaveChangesAsync();
 		}
+
+		
 	}
 }

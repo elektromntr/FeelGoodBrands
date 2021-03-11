@@ -1,5 +1,6 @@
 ﻿@using Logic.Extensions
 @using Microsoft.AspNetCore.Http
+@using System.IO 
 @model Logic.DataTransferObjects.BrandViewModel
 
 @{
@@ -8,6 +9,8 @@
     var language = LanguageExtension.GetLanguage(
         Context.Session.GetString(LanguageExtension.SessionLanguageKey())
         );
+	var logoPath = $"/{FileExtension.LogoDirectory}{@Model.Name}.svg";
+	var filePath = ViewBag.Path;
 }
 
 <section class="section-cover section-t8">
@@ -20,11 +23,19 @@
                          class="img-fluid">
                 </div>
                 <div class="sinse-box">
-                    <h3 class="sinse-title">
-                        @Model.Name
-                        <span></span>
-                        <br>
-                    </h3>
+					<h3 class="sinse-title">
+						@if (!string.IsNullOrWhiteSpace(filePath))
+						{
+							<img src=@logoPath
+								 style="max-width: 24vw;max-height: 24vh;" />
+						}
+						else
+						{
+							@Model.Name
+							<br />
+							<span></span>
+						}
+					</h3>
                     @*<p>Z nami od @Model.CreationDate.Year</p>*@
                 </div>
             </div>

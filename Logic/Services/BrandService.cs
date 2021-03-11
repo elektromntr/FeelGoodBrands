@@ -10,7 +10,9 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using Data.Enums;
+using Logic.Extensions;
 using MailKit.Search;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Logic.Services
 {
@@ -21,18 +23,21 @@ namespace Logic.Services
         private readonly IRepository<Media> _mediaRepository;
         private readonly IRepository<BrandDescription> _brandDescriptionRepository;
         private readonly IProductService _productService;
+        private readonly IWebHostEnvironment _environment;
 
         public BrandService(IRepository<Brand> brandRepository,
             IRepository<Attachment> attachmentRepository,
             IRepository<Media> mediaRepository,
             IRepository<BrandDescription> brandDescriptionRepository,
-            IProductService productService)
+            IProductService productService,
+            IWebHostEnvironment environment)
         {
             _brandRepository = brandRepository;
             _attachmentRepository = attachmentRepository;
             _mediaRepository = mediaRepository;
             _brandDescriptionRepository = brandDescriptionRepository;
             _productService = productService;
+            _environment = environment;
         }
 
         public async Task<Brand> Create(CreateBrand newBrand)
@@ -134,6 +139,26 @@ namespace Logic.Services
             return true;
         }
 
+        public async Task SaveVectorLogo(IFormFile file, string brandName)
+        {
+	        if (!file.ContentType.Contains("svg"))
+		        throw new Exception("Wrong file format");
+	        if (file.Length > 850000)
+		        throw new Exception("File exceeded 850 000 file size limit");
+	        var uploadPath = Path.Combine(_environment.WebRootPath, FileExtension.LogoDirectory);
+
+	        if (!Directory.Exists(uploadPath))
+		        Directory.CreateDirectory(uploadPath);
+
+	        var fileName = brandName + Path.GetExtension(file.FileName);
+	        var filePath = Path.Combine(uploadPath, fileName);
+
+	        using (var stream = new FileStream(filePath, FileMode.Create))
+	        {
+		        await file.CopyToAsync(stream);
+	        }
+        }
+
         public async Task<Brand> GetById(Guid guid) => _brandRepository.Get()
             .Where(i => i.Id == guid)
             .Include(b => b.Cover)
@@ -176,6 +201,11 @@ namespace Logic.Services
             if (model.CoverUpdate != null)
             {
                 dbBrand.CoverId = await SaveCover(model.Id, model.Name, model.CoverUpdate);
+            }
+
+            if (model.Logo != null)
+            {
+	            await SaveVectorLogo(model.Logo, model.Name.Replace(" ", String.Empty));
             }
             _brandRepository.Update(dbBrand);
             _brandRepository.SaveChanges();

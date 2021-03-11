@@ -46,10 +46,16 @@
                    class="btn btn-success">Dodaj opis</a>
             </div>
             <div class="form-group">
-                <label>Zmień zdjęcie główne</label>
-                <input asp-for="CoverUpdate"
-                       class="form-control"
-                       type="file" />
+	            <label>Zmień zdjęcie główne</label>
+	            <input asp-for="CoverUpdate"
+	                   class="form-control"
+	                   type="file" />
+            </div>
+            <div class="form-group">
+	            <label>Dodaj logo</label>
+	            <input asp-for="Logo"
+	                   class="form-control"
+	                   type="file" />
             </div>
             @*partial z linkami*@
             @await Html.PartialAsync("~/Views/Admin/Partials/_BrandLinks.cshtml", Model.Medias.AsEnumerable())

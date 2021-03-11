@@ -14,6 +14,7 @@ namespace Logic.DataTransferObjects
         public string Description { get; set; }
         public Attachment Cover { get; set; }
         public IFormFile CoverUpdate { get; set; }
+        public IFormFile Logo { get; set; }
         public ICollection<Product> Products { get; set; }
         public ICollection<Attachment> Images { get; set; }
         public ICollection<BrandDescription> Descriptions { get; set; }
