@@ -1441,7 +1441,7 @@ a:hover {
     position: absolute;
     left: 15px;
     bottom: 10px;
-    border: solid #95adbe;
+    border: 1px solid #95adbe;
 }
 
 .sinse-box .sinse-title {
