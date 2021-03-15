@@ -1436,11 +1436,12 @@ a:hover {
 }
 
 .sinse-box {
-  background-color: #95adbe;
-  padding: 1rem 2rem;
-  position: absolute;
-  left: 15px;
-  bottom: 10px;
+    background-color: #ffffff;
+    padding: 1rem 2rem;
+    position: absolute;
+    left: 15px;
+    bottom: 10px;
+    border: solid #95adbe;
 }
 
 .sinse-box .sinse-title {
