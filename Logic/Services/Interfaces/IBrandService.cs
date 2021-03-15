@@ -23,5 +23,7 @@ namespace Logic.Services.Interfaces
         Task ChangeBrandOrder(Guid brandGuid, bool moveUp);
         Task<Guid> GetBrandByReferenceId(Guid referenceId);
 		Task<List<Attachment>> GetAttachmentsFromActiveBrands();
-	}
+		string GetLogoUploadPath();
+
+    }
 }

@@ -345,3 +345,4 @@ healthchecksdb
 /Web/ScaffoldingReadMe.txt
 /Web/appsettings.Production.json
 /Web/appsettings.Development.json
+/Web/wwwroot/img/logo

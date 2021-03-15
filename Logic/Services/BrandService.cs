@@ -324,5 +324,11 @@ namespace Logic.Services
 
 	        return atts.ToList();
         }
+
+        public string GetLogoUploadPath()
+        {
+	        var uploadPath = Path.Combine(_environment.WebRootPath, FileExtension.LogoDirectory);
+	        return uploadPath;
+        }
     }
 }

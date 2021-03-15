@@ -1,110 +1,123 @@
 ﻿@using Data.Enums
 @using Logic.Extensions
 @using Microsoft.AspNetCore.Http
+@using System.IO;
+
 @model IList<Data.Models.Brand>
 @{
-    ViewData["Title"] = "Strona główna";
-    Layout = "_Layout";
-    var language = LanguageExtension.GetLanguage(
-        Context.Session.GetString(LanguageExtension.SessionLanguageKey())
-        );
+	ViewData["Title"] = "Strona główna";
+	Layout = "_Layout";
+	var language = LanguageExtension.GetLanguage(
+		Context.Session.GetString(LanguageExtension.SessionLanguageKey())
+		);
+	var logoUploadPath = ViewBag.Path;
 }
 <!--/ Carousel Star /-->
 
 @await Component.InvokeAsync("BrandsCarousel")
 
 <!--/ Carousel end /-->
-    <div class="container">
-        <div class="row section-t4">
-            <div class="col-sm-12">
-@foreach (var brand in Model)
-{
-                <div class="row brand-intro-box">
-                    <div class="col-md-6">
-                        <div class="agent-avatar-box">
-                            <a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")">
-                                <img src="data:@brand.Cover.FileMimeType;base64,@System.Convert.ToBase64String(brand.Cover.FileData)"
-                                     alt="" class="agent-avatar img-fluid">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-5 section-md-t3">
-                        <div class="agent-info-box">
-                            <div class="agent-title">
-                                <div class="title-box-d">
-                                    <h3 class="title-d">
-                                        <a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")">
-                                            @brand.Name
-                                        </a>
-                                    </h3>
-                                </div>
-                            </div>
-                            <div class="agent-content">
-                                <p class="content-d color-text-a">
-                                    @if (brand.Descriptions.Any(d => d.Language == language))
-                                    {
-                                        if (brand.Descriptions
-                                            .FirstOrDefault(d => d.Language == language)?
-                                            .Text.Length > 500)
-                                        {
-                                            <span>
-                                                @Html.Raw(brand.Descriptions
-                                                         .FirstOrDefault(d => d.Language == language)?
-                                                         .Text.Substring(0, 500))...
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <span>
-                                                @Html.Raw(brand.Descriptions
-                                                    .FirstOrDefault(d => d.Language == language)?
-                                                    .Text)
-                                            </span>
-                                        }
-                                    }
-                                    else if (brand.Descriptions.Any(d => d.Language == Language.English))
-                                    {
-                                        if (brand.Descriptions
-                                            .FirstOrDefault(d => d.Language == Language.English)?
-                                            .Text.Length > 500)
-                                        {
-                                            <span>
-                                                @Html.Raw(brand.Descriptions
-                                                    .FirstOrDefault(d => d.Language == Language.English)?
-                                                    .Text.Substring(0, 500))...
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <span>
-                                                @Html.Raw(brand.Descriptions
-                                                    .FirstOrDefault(d => d.Language == Language.English)?
-                                                    .Text)
-                                            </span>
-                                        }
-                                    } 
-                                    else
-                                    {
-                                        <span type="hidden">No description</span>
-                                    }
-                                </p>
-                                <p class="intro-subtitle intro-price socials-footer">
-                                    <a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")">
-                                        <span class="price-b">
-                                            @LanguageExtension.GetTranslatedString(language, "Details")
-                                        </span>
-                                    </a>
-                                </p>
-                            </div>
+<div class="container">
+	<div class="row section-t4">
+		<div class="col-sm-12">
+			@foreach (var brand in Model)
+			{
+				var logoFilePath = $"/{FileExtension.LogoDirectory}{brand.Name.Replace(" ", String.Empty)}.svg";
+				var logoFileExists = System.IO.File.Exists($"{logoUploadPath}{brand.Name.Replace(" ", String.Empty)}.svg");
+				<div class="row brand-intro-box">
+					<div class="col-md-6">
+						<div class="agent-avatar-box">
+							<a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")">
+								<img src="data:@brand.Cover.FileMimeType;base64,@System.Convert.ToBase64String(brand.Cover.FileData)"
+									 alt="" class="agent-avatar img-fluid">
+							</a>
+						</div>
+					</div>
+					<div class="col-md-5 section-md-t3">
+						<div class="agent-info-box">
+							<div class="agent-title">
+								<div class="title-box-d">
+									<h3 class="title-d">
+										@if (logoFileExists)
+										{
+											<a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")">
+												<img src=@logoFilePath
+												     style="max-width: 16vw;max-height: 16vh;" />
+											</a>
+										}
+										else
+				{
+									<span>@brand.Name</span>
+				}
+									</h3>
+								</div>
+							</div>
+							<div class="agent-content">
+								<p class="content-d color-text-a">
+									@if (brand.Descriptions.Any(d => d.Language == language))
+									{
+										if (brand.Descriptions
+											.FirstOrDefault(d => d.Language == language)?
+											.Text.Length > 500)
+										{
+											<span>
+												@Html.Raw(brand.Descriptions
+														 .FirstOrDefault(d => d.Language == language)?
+														 .Text.Substring(0, 500))...
+											</span>
+										}
+										else
+										{
+											<span>
+												@Html.Raw(brand.Descriptions
+													.FirstOrDefault(d => d.Language == language)?
+													.Text)
+											</span>
+										}
+									}
+									else if (brand.Descriptions.Any(d => d.Language == Language.English))
+									{
+										if (brand.Descriptions
+											.FirstOrDefault(d => d.Language == Language.English)?
+											.Text.Length > 500)
+										{
+											<span>
+												@Html.Raw(brand.Descriptions
+													.FirstOrDefault(d => d.Language == Language.English)?
+													.Text.Substring(0, 500))...
+											</span>
+										}
+										else
+										{
+											<span>
+												@Html.Raw(brand.Descriptions
+													.FirstOrDefault(d => d.Language == Language.English)?
+													.Text)
+											</span>
+										}
+									}
+									else
+									{
+										<span type="hidden">No description</span>
+									}
+								</p>
+								<p class="intro-subtitle intro-price socials-footer">
+									<a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")">
+										<span class="price-b">
+											@LanguageExtension.GetTranslatedString(language, "Details")
+										</span>
+									</a>
+								</p>
+							</div>
 
-                        </div>
-                    </div>
-                </div>
-}
-            </div>
-        </div>
-    </div>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+</div>
 @await Html.PartialAsync("~/Views/Home/Partials/_Contact.cshtml");
 @section Scripts {
-    <script src="~/js/contact.js" defer></script>
+	<script src="~/js/contact.js" defer></script>
 }
