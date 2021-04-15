@@ -1,0 +1,29 @@
+﻿/*no media queries*/
+.brand-logo_details {
+	max-width: 16vw;
+	max-height: 16vh;
+}
+
+/*desktop*/
+@media (min-width: 1024px) {
+	.brand-logo_main {
+		max-width: 14vw;
+		max-height: 14vh;
+	}
+}
+
+/*tablet*/
+@media (min-width: 667px) and (max-width: 1024px) {
+	.brand-logo_main {
+		max-width: 18vw;
+		max-height: 9vh;
+	}
+}
+
+/*mobile*/
+@media (max-width: 667px) {
+	.brand-logo_main {
+		max-width: 48vw;
+		max-height: 15vh;
+	}
+}
