@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,6 +21,11 @@ namespace Data.Repository
 		}
 
 		public virtual IQueryable<TEntity> Get() => DbSet;
+
+		public virtual IEnumerable<TEntity> GetByExpression(Expression<Func<TEntity, bool>> expression) 
+		{
+			return DbSet.Where(expression).AsEnumerable();
+		}
 
 		public virtual async Task<TEntity> GetById(object id) => await DbSet.FindAsync(id);
 

@@ -9,9 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using Data.Enums;
 using Logic.Extensions;
-using MailKit.Search;
 using Microsoft.AspNetCore.Hosting;
 
 namespace Logic.Services
@@ -44,18 +42,20 @@ namespace Logic.Services
         {
             try
             {
-                if (_brandRepository.Get().FirstOrDefault(b => b.Name == newBrand.Name) != null) 
+                if (_brandRepository.GetByExpression(b => 
+                        b.Name.ToComparable() == newBrand.Name.ToComparable())
+                    .FirstOrDefault() != null) 
                     throw new Exception("Brand o takiej nazwie już istnieje");
 
                 var brandGuid = Guid.NewGuid();
-                var maxBrandOrder = _brandRepository.Get().MaxAsync(b => b.Order);
+                var maxBrandOrder = GetMaxOrderValue();
                 var brandToCreate = new Brand
                 {
                     CreationDate = DateTime.Now,
                     EditDate = DateTime.Now,
                     Id = brandGuid,
                     Name = newBrand.Name,
-                    Order = await maxBrandOrder +1
+                    Order = maxBrandOrder +1
                 };
 
                 if (newBrand.Cover == null) throw new Exception("Brak zdjęcia głównego dla brandu");
@@ -69,6 +69,11 @@ namespace Logic.Services
             {
                 throw new Exception("Brand hasn't been created", e);
             }
+        }
+
+        private int GetMaxOrderValue()
+		{
+            return _brandRepository.GetByExpression(e => !e.Archived).Max(b => b.Order);
         }
 
         private async Task<Guid> SaveCover(Guid brandGuid, string brandName, IFormFile cover)
@@ -177,16 +182,13 @@ namespace Logic.Services
                 .Include(b => b.Products)
                     .ThenInclude(p => p.Image)
                 .FirstOrDefault();
-            //brand.Images = await _attachmentRepository.Get()
-            //    .Where(i => i.ReferenceId == brand.Id 
-            //                && i.Type != AttachmentType.Cover).ToListAsync();
             return brand;
         }
 
         public async Task<Brand> GetByName(string name)
         {
             // ReSharper disable once PossibleNullReferenceException
-            var guid = _brandRepository.Get().FirstOrDefault(b => b.Name.Replace(" ", "") == name).Id;
+            var guid = _brandRepository.Get().FirstOrDefault(b => b.Name.ToComparable() == name.ToComparable()).Id;
             var brand = await GetByIdWithImages(guid);
             return brand;
         }
