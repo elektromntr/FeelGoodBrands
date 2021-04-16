@@ -10,7 +10,7 @@
 	var language = LanguageExtension.GetLanguage(
 		Context.Session.GetString(LanguageExtension.SessionLanguageKey())
 		);
-	var logoUploadPath = ViewBag.Path;
+	// var logoUploadPath = ViewBag.Path; *Brand logo case
 }
 <!--/ Carousel Star /-->
 
@@ -22,8 +22,9 @@
 		<div class="col-sm-12">
 			@foreach (var brand in Model)
 			{
-				var logoFilePath = $"/{FileExtension.LogoDirectory}{brand.Name.Replace(" ", String.Empty)}.svg";
-				var logoFileExists = System.IO.File.Exists($"{logoUploadPath}{brand.Name.Replace(" ", String.Empty)}.svg");
+				@* Brand logo case *@
+				@* var logoFilePath = $"/{FileExtension.LogoDirectory}{brand.Name.Replace(" ", String.Empty)}.svg";
+				var logoFileExists = System.IO.File.Exists($"{logoUploadPath}{brand.Name.Replace(" ", String.Empty)}.svg"); *@
 				<div class="row brand-intro-box">
 					<div class="col-md-6">
 						<div class="agent-avatar-box">
@@ -38,17 +39,15 @@
 							<div class="agent-title">
 								<div class="title-box-d">
 									<h3 class="title-d">
-										@if (logoFileExists)
+										@* Brand logo case *@
+										@* @if (logoFileExists)
 										{
 											<a asp-controller="Brand" asp-action="Details" asp-route-name="@brand.Name.Replace(" ", "")">
 												<img src=@logoFilePath
 												     class="brand-logo_main" />
 											</a>
-										}
-										else
-				{
+										} *@
 									<span>@brand.Name</span>
-				}
 									</h3>
 								</div>
 							</div>

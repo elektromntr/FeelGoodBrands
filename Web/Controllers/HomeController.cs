@@ -40,7 +40,7 @@ namespace Web.Controllers
 		{
 
             var brands = await _brandService.GetAll();
-            ViewBag.Path = _brandService.GetLogoUploadPath();
+            // ViewBag.Path = _brandService.GetLogoUploadPath(); *Brand logo case
 			return View(brands);
 		}
 
